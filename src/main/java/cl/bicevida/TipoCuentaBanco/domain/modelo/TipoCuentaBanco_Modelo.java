@@ -1,5 +1,4 @@
-package TipoCuentaBanco.domain.modelo;
-package cl.bicevida.domain.modelo;
+package cl.bicevida.TipoCuentaBanco.domain.modelo;
 
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;

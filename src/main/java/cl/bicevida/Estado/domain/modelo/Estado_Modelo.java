@@ -1,6 +1,6 @@
-package Estado.domain.modelo;
-package cl.bicevida.domain.modelo;
+package cl.bicevida.Estado.domain.modelo;
 
+import cl.bicevida.ProcesoEstado.domain.modelo.ProcesoEstado_Modelo;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

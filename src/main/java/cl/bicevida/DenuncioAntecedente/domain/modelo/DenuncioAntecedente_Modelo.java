@@ -1,6 +1,8 @@
-package DenuncioAntecedente.domain.modelo;
-package cl.bicevida.domain.modelo;
+package cl.bicevida.DenuncioAntecedente.domain.modelo;
 
+import cl.bicevida.Denuncio.domain.modelo.Denuncio_Modelo;
+import cl.bicevida.TipoAntecedentes.domain.modelo.TipoAntecedentes_Modelo;
+import cl.bicevida.TipoEstadoAntecedentes.domain.modelo.TipoEstadoAntecedentes_Modelo;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

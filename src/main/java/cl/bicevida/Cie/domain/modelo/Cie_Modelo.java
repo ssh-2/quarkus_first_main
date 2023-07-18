@@ -1,5 +1,4 @@
-package Cie.domain.modelo;
-package cl.bicevida.domain.modelo;
+package cl.bicevida.Cie.domain.modelo;
 
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;

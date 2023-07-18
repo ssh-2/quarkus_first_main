@@ -1,6 +1,8 @@
-package Diagnostico.domain.modelo;
-package cl.bicevida.domain.modelo;
+package cl.bicevida.Diagnostico.domain.modelo;
 
+import cl.bicevida.Cie.domain.modelo.Cie_Modelo;
+import cl.bicevida.Precedencia.domain.modelo.Precedencia_Modelo;
+import cl.bicevida.Siniestro.domain.modelo.Siniestro_Modelo;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

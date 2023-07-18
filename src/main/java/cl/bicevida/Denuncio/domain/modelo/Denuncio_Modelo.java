@@ -1,5 +1,4 @@
-package Denuncio.domain.modelo;
-package cl.bicevida.domain.modelo;
+package cl.bicevida.Denuncio.domain.modelo;
 
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;

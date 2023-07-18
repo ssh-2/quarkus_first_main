@@ -1,5 +1,4 @@
-package AnticipoPagoFuturo.domain.modelo;
-package cl.bicevida.domain.modelo;
+package cl.bicevida.AnticipoPagoFuturo.domain.modelo;
 
 import jakarta.json.bind.annotation.JsonbDateFormat;
 import jakarta.json.bind.annotation.JsonbProperty;

@@ -1,5 +1,4 @@
-package HomologacionCoberturaLegacy.domain.modelo;
-package cl.bicevida.domain.modelo;
+package cl.bicevida.HomologacionCoberturaLegacy.domain.modelo;
 
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;

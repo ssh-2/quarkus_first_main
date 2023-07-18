@@ -1,6 +1,6 @@
-package Documento.domain.modelo;
-package cl.bicevida.domain.modelo;
+package cl.bicevida.Documento.domain.modelo;
 
+import cl.bicevida.Denuncio.domain.modelo.Denuncio_Modelo;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

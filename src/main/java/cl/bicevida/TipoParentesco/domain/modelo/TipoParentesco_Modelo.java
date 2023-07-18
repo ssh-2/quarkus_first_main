@@ -1,5 +1,4 @@
-package TipoParentesco.domain.modelo;
-package cl.bicevida.domain.modelo;
+package cl.bicevida.TipoParentesco.domain.modelo;
 
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;

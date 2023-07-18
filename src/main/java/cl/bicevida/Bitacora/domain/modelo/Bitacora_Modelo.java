@@ -1,6 +1,6 @@
-package Bitacora.domain.modelo;
-package cl.bicevida.domain.modelo;
+package cl.bicevida.Bitacora.domain.modelo;
 
+import cl.bicevida.Table.domain.modelo.Table_Modelo;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

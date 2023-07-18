@@ -1,6 +1,13 @@
-package LiquidacionesDetalle.domain.modelo;
-package cl.bicevida.domain.modelo;
+package cl.bicevida.LiquidacionesDetalle.domain.modelo;
 
+import cl.bicevida.AnticipoPagoFuturo.domain.modelo.AnticipoPagoFuturo_Modelo;
+import cl.bicevida.Beneficiario.domain.modelo.Beneficiario_Modelo;
+import cl.bicevida.Estado.domain.modelo.Estado_Modelo;
+import cl.bicevida.Liquidaciones.domain.modelo.Liquidaciones_Modelo;
+import cl.bicevida.MotivoReversa.domain.modelo.MotivoReversa_Modelo;
+import cl.bicevida.NivelEscolaridad.domain.modelo.NivelEscolaridad_Modelo;
+import cl.bicevida.TipoMedioPago.domain.modelo.TipoMedioPago_Modelo;
+import cl.bicevida.TipoPagoLiquidacion.domain.modelo.TipoPagoLiquidacion_Modelo;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

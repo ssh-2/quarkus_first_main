@@ -1,6 +1,7 @@
-package Siniestro.domain.modelo;
-package cl.bicevida.domain.modelo;
+package cl.bicevida.Siniestro.domain.modelo;
 
+import cl.bicevida.Estado.domain.modelo.Estado_Modelo;
+import cl.bicevida.HomologacionCoberturaLegacy.domain.modelo.HomologacionCoberturaLegacy_Modelo;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

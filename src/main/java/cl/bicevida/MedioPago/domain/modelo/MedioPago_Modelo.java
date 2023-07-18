@@ -1,6 +1,9 @@
-package MedioPago.domain.modelo;
-package cl.bicevida.domain.modelo;
+package cl.bicevida.MedioPago.domain.modelo;
 
+import cl.bicevida.Banco.domain.modelo.Banco_Modelo;
+import cl.bicevida.Persona.domain.modelo.Persona_Modelo;
+import cl.bicevida.TipoCuentaBanco.domain.modelo.TipoCuentaBanco_Modelo;
+import cl.bicevida.TipoMedioPago.domain.modelo.TipoMedioPago_Modelo;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

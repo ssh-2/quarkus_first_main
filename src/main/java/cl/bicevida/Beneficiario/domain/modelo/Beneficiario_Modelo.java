@@ -1,6 +1,8 @@
-package Beneficiario.domain.modelo;
-package cl.bicevida.domain.modelo;
+package cl.bicevida.Beneficiario.domain.modelo;
 
+import cl.bicevida.MedioPago.domain.modelo.MedioPago_Modelo;
+import cl.bicevida.Persona.domain.modelo.Persona_Modelo;
+import cl.bicevida.Siniestro.domain.modelo.Siniestro_Modelo;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
