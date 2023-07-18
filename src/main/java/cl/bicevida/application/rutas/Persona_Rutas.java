@@ -3,7 +3,6 @@ package cl.bicevida.application.rutas;
 import cl.bicevida.application.controladores.Persona_CrearPersona_Controlador;
 import cl.bicevida.domain.modelo.Persona_Modelo;
 import cl.bicevida.domain.puertosSalida.CrearPersona_PuertoSalida;
-import cl.bicevida.example.Persona;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;

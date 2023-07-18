@@ -8,6 +8,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.time.LocalDate;
@@ -15,6 +18,9 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "anticipo_pago_futuro")
 @Schema(description = "Entidad AnticipoPagoFuturo")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class AnticipoPagoFuturo_Modelo {
 
     @Id
@@ -59,85 +65,4 @@ public class AnticipoPagoFuturo_Modelo {
     @Schema(required = false, implementation = Boolean.class, example = "true")
     @JsonbProperty("status")
     private Boolean status;
-
-    public AnticipoPagoFuturo_Modelo() {
-    }
-
-    public AnticipoPagoFuturo_Modelo(Integer id, Integer idBeneficiario, LocalDate fecha, Integer tasaActual,
-                              Integer yearsPendientes, Double capitalAnualUF, Double aPagarUF, Boolean status) {
-        this.id = id;
-        this.idBeneficiario = idBeneficiario;
-        this.fecha = fecha;
-        this.tasaActual = tasaActual;
-        this.yearsPendientes = yearsPendientes;
-        this.capitalAnualUF = capitalAnualUF;
-        this.aPagarUF = aPagarUF;
-        this.status = status;
-    }
-
-    // Getters y setters
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getIdBeneficiario() {
-        return idBeneficiario;
-    }
-
-    public void setIdBeneficiario(Integer idBeneficiario) {
-        this.idBeneficiario = idBeneficiario;
-    }
-
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
-
-    public Integer getTasaActual() {
-        return tasaActual;
-    }
-
-    public void setTasaActual(Integer tasaActual) {
-        this.tasaActual = tasaActual;
-    }
-
-    public Integer getYearsPendientes() {
-        return yearsPendientes;
-    }
-
-    public void setYearsPendientes(Integer yearsPendientes) {
-        this.yearsPendientes = yearsPendientes;
-    }
-
-    public Double getCapitalAnualUF() {
-        return capitalAnualUF;
-    }
-
-    public void setCapitalAnualUF(Double capitalAnualUF) {
-        this.capitalAnualUF = capitalAnualUF;
-    }
-
-    public Double getaPagarUF() {
-        return aPagarUF;
-    }
-
-    public void setaPagarUF(Double aPagarUF) {
-        this.aPagarUF = aPagarUF;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
 }

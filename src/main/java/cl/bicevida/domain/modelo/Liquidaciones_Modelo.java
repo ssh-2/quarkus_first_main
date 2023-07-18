@@ -5,10 +5,16 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Entity
 @Table(name = "liquidaciones")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Liquidaciones_Modelo {
     @Id
     @Column(name = "id", nullable = false)
@@ -20,13 +26,4 @@ public class Liquidaciones_Modelo {
     @Schema(required = true, implementation = Integer.class, example = "1")
     @JsonbProperty("id_siniestro")
     public Integer idSiniestro;
-
-    // Constructor vacío
-    public Liquidaciones_Modelo() {}
-
-    // Constructor con todos los campos
-    public Liquidaciones_Modelo(Integer id, Integer idSiniestro) {
-        this.id = id;
-        this.idSiniestro = idSiniestro;
-    }
 }

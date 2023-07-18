@@ -5,10 +5,16 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Entity
 @Table(name = "motivo_reversa")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class MotivoReversa_Modelo {
     @Id
     @Column(name = "id", nullable = false)
@@ -25,14 +31,4 @@ public class MotivoReversa_Modelo {
     @Schema(required = true, implementation = Boolean.class, example = "true")
     @JsonbProperty("active")
     public Boolean active;
-
-    // Constructor vacío
-    public MotivoReversa_Modelo() {}
-
-    // Constructor con todos los campos
-    public MotivoReversa_Modelo(Integer id, String descripcion, Boolean active) {
-        this.id = id;
-        this.descripcion = descripcion;
-        this.active = active;
-    }
 }

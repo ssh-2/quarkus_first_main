@@ -6,7 +6,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tipo_pago_liquidacion")
 public class TipoPagoLiquidacion_Modelo {
@@ -25,14 +31,4 @@ public class TipoPagoLiquidacion_Modelo {
     @Schema(required = false, implementation = Boolean.class, example = "true")
     @JsonbProperty("status")
     public Boolean status;
-
-    // Constructor vacío
-    public TipoPagoLiquidacion_Modelo() {}
-
-    // Constructor con todos los campos
-    public TipoPagoLiquidacion_Modelo(Integer id, String nombre, Boolean status) {
-        this.id = id;
-        this.nombre = nombre;
-        this.status = status;
-    }
 }

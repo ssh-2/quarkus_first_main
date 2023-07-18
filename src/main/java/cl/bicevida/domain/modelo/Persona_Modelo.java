@@ -8,9 +8,15 @@ import jakarta.persistence.Table;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "persona")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Persona_Modelo {
     @Id
     @Column(name = "id", nullable = false)
@@ -57,19 +63,4 @@ public class Persona_Modelo {
     @Schema(required = true, implementation = String.class, example = "juan.perez@example.com")
     @JsonbProperty("email")
     public String email;
-
-    public Persona_Modelo() {}
-
-    public Persona_Modelo(Long id, String rut, String dv, String nombres_Razon_Social, String apellido_1, String apellido_2,
-                          LocalDateTime fecha_Nacimiento, String sexo, String email) {
-        this.id = id;
-        this.rut = rut;
-        this.dv = dv;
-        this.nombresRazonSocial = nombres_Razon_Social;
-        this.apellido1 = apellido_1;
-        this.apellido2 = apellido_2;
-        this.fechaNacimiento = fecha_Nacimiento;
-        this.sexo = sexo;
-        this.email = email;
-    }
 }

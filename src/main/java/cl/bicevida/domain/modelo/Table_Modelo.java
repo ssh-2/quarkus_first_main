@@ -6,9 +6,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "tables")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Table_Modelo {
     @Id
     @Column(name = "id", nullable = false)
@@ -20,13 +26,4 @@ public class Table_Modelo {
     @Schema(required = true, implementation = String.class, example = "Table")
     @JsonbProperty("name")
     public String name;
-
-    // Constructor vacío
-    public Table_Modelo() {}
-
-    // Constructor con todos los campos
-    public Table_Modelo(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 }

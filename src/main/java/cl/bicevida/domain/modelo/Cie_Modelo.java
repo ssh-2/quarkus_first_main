@@ -5,10 +5,16 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Entity
 @Table(name = "cie")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cie_Modelo {
     @Id
     @Column(name = "id", nullable = false)
@@ -30,13 +36,4 @@ public class Cie_Modelo {
     @Schema(required = true, implementation = Boolean.class, example = "true")
     @JsonbProperty("active")
     public Boolean active;
-
-    public Cie_Modelo() {}
-
-    public Cie_Modelo(Integer id, String descripcion, String codigoCie, Boolean active) {
-        this.id = id;
-        this.descripcion = descripcion;
-        this.codigoCie = codigoCie;
-        this.active = active;
-    }
 }

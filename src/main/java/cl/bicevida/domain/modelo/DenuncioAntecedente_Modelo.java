@@ -8,12 +8,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "denuncio_antecedente")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class DenuncioAntecedente_Modelo {
     @Id
     @Column(name = "id", nullable = false)
@@ -56,20 +62,4 @@ public class DenuncioAntecedente_Modelo {
     @Schema(required = false, implementation = LocalDate.class, example = "2023-07-17")
     @JsonbProperty("fecha_creacion")
     public LocalDate fechaCreacion;
-
-    // Constructor vacío
-    public DenuncioAntecedente_Modelo() {}
-
-    // Constructor con todos los campos
-    public DenuncioAntecedente_Modelo(Integer id, Denuncio_Modelo denuncio, TipoAntecedentes_Modelo tipoAntecedentes,
-                                      TipoEstadoAntecedentes_Modelo tipoEstadoAntecedente, String observacion,
-                                      LocalDate fechaRecepcion, LocalDate fechaCreacion) {
-        this.id = id;
-        this.denuncio = denuncio;
-        this.tipoAntecedentes = tipoAntecedentes;
-        this.tipoEstadoAntecedente = tipoEstadoAntecedente;
-        this.observacion = observacion;
-        this.fechaRecepcion = fechaRecepcion;
-        this.fechaCreacion = fechaCreacion;
-    }
 }

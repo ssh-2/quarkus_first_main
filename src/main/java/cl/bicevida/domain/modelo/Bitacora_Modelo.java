@@ -7,11 +7,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Entity
 @Table(name = "bitacora")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Bitacora_Modelo {
+
     @Id
     @Column(name = "id", nullable = false)
     @Schema(required = true, implementation = Integer.class, example = "1")
@@ -42,17 +49,4 @@ public class Bitacora_Modelo {
     @JoinColumn(name = "id_table", referencedColumnName = "id")
     @JsonbProperty("id_table")
     public Table_Modelo idTable;
-
-    // Constructor vacío
-    public Bitacora_Modelo() {}
-
-    // Constructor con todos los campos
-    public Bitacora_Modelo(Integer id, String table, Integer idRegistro, String accion, String usuario, Table_Modelo idTable) {
-        this.id = id;
-        this.table = table;
-        this.idRegistro = idRegistro;
-        this.accion = accion;
-        this.usuario = usuario;
-        this.idTable = idTable;
-    }
 }

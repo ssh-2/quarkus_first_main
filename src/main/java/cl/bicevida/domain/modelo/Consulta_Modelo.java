@@ -5,12 +5,18 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "consulta")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Consulta_Modelo {
     @Id
     @Column(name = "id", nullable = false)
@@ -47,19 +53,4 @@ public class Consulta_Modelo {
     @Schema(required = false, implementation = LocalDate.class, example = "2023-07-17")
     @JsonbProperty("fecha")
     public LocalDate fecha;
-
-    // Constructor vacío
-    public Consulta_Modelo() {}
-
-    // Constructor con todos los campos
-    public Consulta_Modelo(Integer id, Integer idTipoConsulta, String descripcion, Boolean active,
-                           Integer idDenuncio, String rol, LocalDate fecha) {
-        this.id = id;
-        this.idTipoConsulta = idTipoConsulta;
-        this.descripcion = descripcion;
-        this.active = active;
-        this.idDenuncio = idDenuncio;
-        this.rol = rol;
-        this.fecha = fecha;
-    }
 }

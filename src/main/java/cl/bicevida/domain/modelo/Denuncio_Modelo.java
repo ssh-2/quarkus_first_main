@@ -5,12 +5,18 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "denuncio")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Denuncio_Modelo {
     @Id
     @Column(name = "id", nullable = false)
@@ -122,39 +128,4 @@ public class Denuncio_Modelo {
     @Schema(required = false, implementation = LocalDate.class, example = "2023-07-17")
     @JsonbProperty("fecha_estado")
     public LocalDate fechaEstado;
-
-    // Constructor vacío
-    public Denuncio_Modelo() {
-    }
-
-    // Constructor con todos los campos
-    public Denuncio_Modelo(Integer id, LocalDate fechaOcurrencia, LocalDate fechaConocimiento, LocalDate fechaNotificacion,
-                           String descripcionHechos, Integer idTipoDenuncio, Integer idEstado, Integer idDenunciante,
-                           Integer idSiniestrado, Integer idTitular, Integer idCanal, String tipoIngreso,
-                           Integer idLineaNegocio, Integer prefijoPoliza, Integer numeroPoliza,
-                           Integer secuenciaPoliza, String producto, LocalDate inicioPoliza, LocalDate terminoPoliza,
-                           Integer idLiquidador, Boolean active, LocalDate fechaEstado) {
-        this.id = id;
-        this.fechaOcurrencia = fechaOcurrencia;
-        this.fechaConocimiento = fechaConocimiento;
-        this.fechaNotificacion = fechaNotificacion;
-        this.descripcionHechos = descripcionHechos;
-        this.idTipoDenuncio = idTipoDenuncio;
-        this.idEstado = idEstado;
-        this.idDenunciante = idDenunciante;
-        this.idSiniestrado = idSiniestrado;
-        this.idTitular = idTitular;
-        this.idCanal = idCanal;
-        this.tipoIngreso = tipoIngreso;
-        this.idLineaNegocio = idLineaNegocio;
-        this.prefijoPoliza = prefijoPoliza;
-        this.numeroPoliza = numeroPoliza;
-        this.secuenciaPoliza = secuenciaPoliza;
-        this.producto = producto;
-        this.inicioPoliza = inicioPoliza;
-        this.terminoPoliza = terminoPoliza;
-        this.idLiquidador = idLiquidador;
-        this.active = active;
-        this.fechaEstado = fechaEstado;
-    }
 }

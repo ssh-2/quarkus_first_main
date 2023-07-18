@@ -5,10 +5,16 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Entity
 @Table(name = "nivel_escolaridad")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class NivelEscolaridad_Modelo {
     @Id
     @Column(name = "id", nullable = false)
@@ -30,15 +36,4 @@ public class NivelEscolaridad_Modelo {
     @Schema(required = true, implementation = Boolean.class, example = "true")
     @JsonbProperty("status")
     public Boolean status;
-
-    // Constructor vacío
-    public NivelEscolaridad_Modelo() {}
-
-    // Constructor con todos los campos
-    public NivelEscolaridad_Modelo(Integer id, String nombre, Integer correlativo, Boolean status) {
-        this.id = id;
-        this.nombre = nombre;
-        this.correlativo = correlativo;
-        this.status = status;
-    }
 }

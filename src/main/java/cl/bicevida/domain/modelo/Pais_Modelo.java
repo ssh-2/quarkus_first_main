@@ -1,6 +1,5 @@
 package cl.bicevida.domain.modelo;
 
-import jakarta.json.bind.annotation.JsonbDateFormat;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,7 +7,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 

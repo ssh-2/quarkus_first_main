@@ -8,7 +8,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tipo_antecedentes_denuncio")
 public class TipoAntecedentesDenuncio_Modelo {
@@ -34,15 +40,4 @@ public class TipoAntecedentesDenuncio_Modelo {
     @Schema(required = true, implementation = Boolean.class, example = "true")
     @JsonbProperty("active")
     public Boolean active;
-
-    // Constructor vacío
-    public TipoAntecedentesDenuncio_Modelo() {}
-
-    // Constructor con todos los campos
-    public TipoAntecedentesDenuncio_Modelo(Integer id, TipoAntecedentes_Modelo tipoAntecedente, TipoDenuncio_Modelo tipoDenuncio, Boolean active) {
-        this.id = id;
-        this.tipoAntecedente = tipoAntecedente;
-        this.tipoDenuncio = tipoDenuncio;
-        this.active = active;
-    }
 }

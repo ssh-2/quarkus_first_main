@@ -5,11 +5,17 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Entity
 @Table(name = "homologacion_cobertura_legacy")
-public class HomologacionCoberturaLegacy_Modelo  {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class HomologacionCoberturaLegacy_Modelo {
     @Id
     @Column(name = "id", nullable = false)
     @Schema(required = true, implementation = Integer.class, example = "1")
@@ -35,16 +41,4 @@ public class HomologacionCoberturaLegacy_Modelo  {
     @Schema(required = true, implementation = Boolean.class, example = "true")
     @JsonbProperty("active")
     public Boolean active;
-
-    // Constructor vacío
-    public HomologacionCoberturaLegacy_Modelo() {}
-
-    // Constructor con todos los campos
-    public HomologacionCoberturaLegacy_Modelo(Integer id, Integer idCoberturaLegacy, String registroCMF, Integer idLineaNegocioLegacy, Boolean active) {
-        this.id = id;
-        this.idCoberturaLegacy = idCoberturaLegacy;
-        this.registroCMF = registroCMF;
-        this.idLineaNegocioLegacy = idLineaNegocioLegacy;
-        this.active = active;
-    }
 }
