@@ -10,7 +10,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "persona_TEST")
+@Table(name = "persona")
 public class Persona_Modelo {
     @Id
     @Column(name = "id", nullable = false)
@@ -23,21 +23,53 @@ public class Persona_Modelo {
     @JsonbProperty("rut")
     public String rut;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(name = "dv")
+    @Schema(required = true, implementation = String.class, example = "9")
+    @JsonbProperty("dv")
+    public String dv;
 
-    public void setRut(String rut) {
-        this.rut = rut;
-    }
+    @Column(name = "nombres_Razon_Social")
+    @Schema(required = true, implementation = String.class, example = "Juan Carlos")
+    @JsonbProperty("nombres_Razon_Social")
+    public String nombresRazonSocial;
 
-    // Constructor vacío
+    @Column(name = "apellido_1")
+    @Schema(required = true, implementation = String.class, example = "Pérez")
+    @JsonbProperty("apellido1")
+    public String apellido1;
+
+    @Column(name = "apellido_2")
+    @Schema(required = true, implementation = String.class, example = "Gómez")
+    @JsonbProperty("apellido2")
+    public String apellido2;
+
+    @Column(name = "fecha_Nacimiento")
+    @Schema(required = true, implementation = LocalDateTime.class, example = "1990-01-01")
+    @JsonbProperty("fecha_Nacimiento")
+    public LocalDateTime fechaNacimiento;
+
+    @Column(name = "sexo")
+    @Schema(required = true, implementation = String.class, example = "Masculino")
+    @JsonbProperty("sexo")
+    public String sexo;
+
+    @Column(name = "email")
+    @Schema(required = true, implementation = String.class, example = "juan.perez@example.com")
+    @JsonbProperty("email")
+    public String email;
+
     public Persona_Modelo() {}
 
-    // Constructor con todos los campos
-    public Persona_Modelo(Long id, String rut) {
+    public Persona_Modelo(Long id, String rut, String dv, String nombres_Razon_Social, String apellido_1, String apellido_2,
+                          LocalDateTime fecha_Nacimiento, String sexo, String email) {
         this.id = id;
         this.rut = rut;
-
+        this.dv = dv;
+        this.nombresRazonSocial = nombres_Razon_Social;
+        this.apellido1 = apellido_1;
+        this.apellido2 = apellido_2;
+        this.fechaNacimiento = fecha_Nacimiento;
+        this.sexo = sexo;
+        this.email = email;
     }
 }
