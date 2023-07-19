@@ -3,10 +3,12 @@ package cl.bicevida.Canal.application.rutas;
 import cl.bicevida.Canal.application.controladores.Canal_ActualizarCanal_Controlador;
 import cl.bicevida.Canal.application.controladores.Canal_CrearCanal_Controlador;
 import cl.bicevida.Canal.application.controladores.Canal_EliminarCanal_Controlador;
+import cl.bicevida.Canal.application.controladores.Canal_ObtenerCanal_Controlador;
 import cl.bicevida.Canal.domain.modelo.Canal_Modelo;
 import cl.bicevida.Canal.domain.puertoSalida.ActualizarCanal_PuertoSalida;
 import cl.bicevida.Canal.domain.puertoSalida.CrearCanal_PuertoSalida;
 import cl.bicevida.Canal.domain.puertoSalida.EliminarCanal_PuertoSalida;
+import cl.bicevida.Canal.domain.puertoSalida.ObtenerCanal_PuertoSalida;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
@@ -22,6 +24,10 @@ import org.eclipse.microprofile.faulttolerance.Retry;
 @Transactional(Transactional.TxType.SUPPORTS)
 public class Canal_Rutas {
 
+
+
+    @Inject
+    ObtenerCanal_PuertoSalida obtenerCanalPuertoSalida;
     @Inject
     CrearCanal_PuertoSalida crearCanalPuertoSalida;
     @Inject
@@ -29,7 +35,24 @@ public class Canal_Rutas {
     @Inject
     EliminarCanal_PuertoSalida eliminarCanalPuertoSalida;
 
+    @GET
+    @Path("/{id}")
+    @Retry(maxRetries = 3, delay = 3000)
+    @Fallback(fallbackMethod = "fallbackObtenerCanal")
+    public Response obtenerCanal(@PathParam("id") Long id) {
+        Canal_ObtenerCanal_Controlador controlador = new Canal_ObtenerCanal_Controlador(obtenerCanalPuertoSalida);
+        Canal_Modelo canal_encontrado = controlador.obtenerCanal_PuertoEntrada(id);
+        if(canal_encontrado != null) {
+            return Response.status(200).entity(canal_encontrado).build();
+        }
+        else {
+            return Response.status(404).build();
+        }
+    }
 
+    public Response fallbackObtenerCanal(@PathParam("id") Long id) {
+        return Response.status(503).build();
+    }
 
     @POST
     @Retry(maxRetries = 3, delay = 3000)
@@ -59,14 +82,14 @@ public class Canal_Rutas {
     @DELETE
     @Path("/{id}")
     @Retry(maxRetries = 3, delay = 3000)
-    @Fallback(fallbackMethod = "fallbackElimnarCanal")
+    @Fallback(fallbackMethod = "fallbackElimniarCanal")
     public Response eliminarCanal(@PathParam("id")Long id) {
         Canal_EliminarCanal_Controlador controlador = new Canal_EliminarCanal_Controlador(eliminarCanalPuertoSalida);
         controlador.eliminarCanal_PuertoEntrada(id);
         return Response.status(201).build();
     }
 
-    public Response fallbackElimnarCanal(Long id) {
+    public Response fallbackElimniarCanal(Long id) {
         return Response.status(503).build();
     }
 }
