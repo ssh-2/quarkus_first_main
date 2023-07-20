@@ -17,14 +17,11 @@ import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Retry;
 
-
 @Path("/api/canal")
 @Produces(value = MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Transactional(Transactional.TxType.SUPPORTS)
 public class Canal_Rutas {
-
-
 
     @Inject
     ObtenerCanal_PuertoSalida obtenerCanalPuertoSalida;
@@ -82,14 +79,14 @@ public class Canal_Rutas {
     @DELETE
     @Path("/{id}")
     @Retry(maxRetries = 3, delay = 3000)
-    @Fallback(fallbackMethod = "fallbackElimniarCanal")
+    @Fallback(fallbackMethod = "fallbackElimninarCanal")
     public Response eliminarCanal(@PathParam("id")Long id) {
         Canal_EliminarCanal_Controlador controlador = new Canal_EliminarCanal_Controlador(eliminarCanalPuertoSalida);
         controlador.eliminarCanal_PuertoEntrada(id);
         return Response.status(201).build();
     }
 
-    public Response fallbackElimniarCanal(Long id) {
+    public Response fallbackElimninarCanal(Long id) {
         return Response.status(503).build();
     }
 }
