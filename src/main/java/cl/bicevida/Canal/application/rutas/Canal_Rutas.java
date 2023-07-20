@@ -1,14 +1,8 @@
 package cl.bicevida.Canal.application.rutas;
 
-import cl.bicevida.Canal.application.controladores.Canal_ActualizarCanal_Controlador;
-import cl.bicevida.Canal.application.controladores.Canal_CrearCanal_Controlador;
-import cl.bicevida.Canal.application.controladores.Canal_EliminarCanal_Controlador;
-import cl.bicevida.Canal.application.controladores.Canal_ObtenerCanal_Controlador;
+import cl.bicevida.Canal.application.controladores.*;
 import cl.bicevida.Canal.domain.modelo.Canal_Modelo;
-import cl.bicevida.Canal.domain.puertoSalida.ActualizarCanal_PuertoSalida;
-import cl.bicevida.Canal.domain.puertoSalida.CrearCanal_PuertoSalida;
-import cl.bicevida.Canal.domain.puertoSalida.EliminarCanal_PuertoSalida;
-import cl.bicevida.Canal.domain.puertoSalida.ObtenerCanal_PuertoSalida;
+import cl.bicevida.Canal.domain.puertoSalida.*;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
@@ -16,6 +10,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Retry;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 
 @Path("/api/canal")
 @Produces(value = MediaType.APPLICATION_JSON)
@@ -24,6 +20,8 @@ import org.eclipse.microprofile.faulttolerance.Retry;
 public class Canal_Rutas {
 
     @Inject
+    ObtenerTodosCanal_PuertoSalida todosCanalPuertoSalida;
+    @Inject
     ObtenerCanal_PuertoSalida obtenerCanalPuertoSalida;
     @Inject
     CrearCanal_PuertoSalida crearCanalPuertoSalida;
@@ -31,6 +29,21 @@ public class Canal_Rutas {
     ActualizarCanal_PuertoSalida actualizarCanalPuertoSalida;
     @Inject
     EliminarCanal_PuertoSalida eliminarCanalPuertoSalida;
+
+    @GET
+    @APIResponses(
+            value = { @APIResponse(responseCode = "200", description = "OK"),
+                    @APIResponse(responseCode = "400", description = "No encontrado")}
+    )
+    @Retry(maxRetries = 3, delay = 3000)
+    @Fallback(fallbackMethod = "fallbackTodosLosCanales")
+    public Response todosLosCanales() {
+        Canal_ObtenerTodosCanal_Controlador controlador = new Canal_ObtenerTodosCanal_Controlador(todosCanalPuertoSalida);
+        return Response.status(200).entity(controlador.obtenerTodosCanal_PuertoEntrada()).build();
+    }
+    public Response fallbackTodosLosCanales() {
+        return Response.status(503).build();
+    }
 
     @GET
     @Path("/{id}")
