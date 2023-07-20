@@ -2,10 +2,7 @@ package cl.bicevida.Liquidador.domain.modelo;
 
 import jakarta.json.bind.annotation.JsonbDateFormat;
 import jakarta.json.bind.annotation.JsonbProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,10 +17,11 @@ import java.util.Date;
 @AllArgsConstructor
 public class Liquidador_Modelo {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     @Schema(required = true, implementation = Integer.class, example = "1")
     @JsonbProperty("id")
-    public Long id;
+    private Long id;
 
     @Column(name = "nombre")
     @Schema(required = true, implementation = String.class, example = "John Doe")
@@ -42,13 +40,11 @@ public class Liquidador_Modelo {
 
     @Column(name = "fecha_creacion")
     @Schema(required = false, implementation = Date.class, example = "2023-07-17")
-    @JsonbDateFormat(value = "yyyy-MM-dd")
-    //@JsonbProperty("fecha_creacion")
+    @JsonbProperty("fecha_creacion")
     private Date fechaCreacion;
 
     @Column(name = "fecha_actualizacion")
     @Schema(required = false, implementation = Date.class, example = "2023-07-17")
-    //@JsonbDateFormat(value = "yyyy-MM-dd")
     @JsonbProperty("fecha_actualizacion")
     private Date fechaActualizacion;
 

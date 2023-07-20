@@ -17,6 +17,7 @@ public class Liquidador_Crear_DB implements CrearLiquidador_PuertoSalida {
     @Retry(maxRetries = 3, delay = 3000)
     @Transactional
     public Liquidador_Modelo crearLiquidador_PuertoSalida(Liquidador_Modelo liquidador) {
-        return repository.findById(liquidador.id) ;
+        repository.persist(liquidador);
+        return repository.findById(liquidador.getId()) ;
     }
 }
