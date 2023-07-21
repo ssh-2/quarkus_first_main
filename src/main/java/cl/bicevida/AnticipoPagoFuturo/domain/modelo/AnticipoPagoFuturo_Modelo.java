@@ -26,14 +26,14 @@ public class AnticipoPagoFuturo_Modelo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "id_beneficiario")
-    @Schema(required = false, implementation = Integer.class, example = "1")
+    @Schema(required = false, implementation = Long.class, example = "1")
     @JsonbProperty("id_beneficiario")
-    private Integer idBeneficiario;
+    private Long idBeneficiario;
 
     @Column(name = "fecha")
     @Schema(required = false, implementation = LocalDate.class, example = "2023-07-17")
@@ -42,14 +42,14 @@ public class AnticipoPagoFuturo_Modelo {
     private LocalDate fecha;
 
     @Column(name = "tasa_actual")
-    @Schema(required = false, implementation = Integer.class, example = "5")
+    @Schema(required = false, implementation = Long.class, example = "5")
     @JsonbProperty("tasa_actual")
-    private Integer tasaActual;
+    private Long tasaActual;
 
     @Column(name = "years_pendientes")
-    @Schema(required = false, implementation = Integer.class, example = "10")
+    @Schema(required = false, implementation = Long.class, example = "10")
     @JsonbProperty("years_pendientes")
-    private Integer yearsPendientes;
+    private Long yearsPendientes;
 
     @Column(name = "capital_anual_uf")
     @Schema(required = false, implementation = Double.class, example = "1000.0")
@@ -61,8 +61,8 @@ public class AnticipoPagoFuturo_Modelo {
     @JsonbProperty("a_pagar_uf")
     private Double aPagarUF;
 
-    @Column(name = "status")
+    @Column(name = "active")
     @Schema(required = false, implementation = Boolean.class, example = "true")
-    @JsonbProperty("status")
-    private Boolean status;
+    @JsonbProperty("active")
+    private Boolean active;
 }

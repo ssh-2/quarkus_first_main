@@ -18,9 +18,9 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 public class NivelEscolaridad_Modelo {
     @Id
     @Column(name = "id", nullable = false)
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id")
-    public Integer id;
+    public Long id;
 
     @Column(name = "nombre")
     @Schema(required = true, implementation = String.class, example = "Nivel de escolaridad")
@@ -28,12 +28,12 @@ public class NivelEscolaridad_Modelo {
     public String nombre;
 
     @Column(name = "correlativo")
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("correlativo")
-    public Integer correlativo;
+    public Long correlativo;
 
-    @Column(name = "status")
+    @Column(name = "active")
     @Schema(required = true, implementation = Boolean.class, example = "true")
-    @JsonbProperty("status")
-    public Boolean status;
+    @JsonbProperty("active")
+    public Boolean active;
 }

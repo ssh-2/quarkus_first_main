@@ -18,9 +18,9 @@ import lombok.Data;
 public class Documento_Modelo {
     @Id
     @Column(name = "id", nullable = false)
-    @Schema(required = true, implementation = Integer.class)
+    @Schema(required = true, implementation = Long.class)
     @JsonbProperty("id")
-    public Integer id;
+    public Long id;
 
     @ManyToOne
     @JoinColumn(name = "id_denuncio", referencedColumnName = "id", foreignKey = @ForeignKey(name = "id_denuncio"))

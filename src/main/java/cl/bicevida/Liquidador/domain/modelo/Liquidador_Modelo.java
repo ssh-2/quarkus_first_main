@@ -19,7 +19,7 @@ public class Liquidador_Modelo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id")
     private Long id;
 
@@ -40,22 +40,22 @@ public class Liquidador_Modelo {
 
     @Column(name = "fecha_creacion")
     @Schema(required = false, implementation = Date.class, example = "2023-07-17")
-    @JsonbProperty("fecha_creacion")
+    @JsonbProperty("fechaCreacion")
     private Date fechaCreacion;
 
-    @Column(name = "fecha_actualizacion")
+    @Column(name = "fecha_ultima_actualizacion")
     @Schema(required = false, implementation = Date.class, example = "2023-07-17")
-    @JsonbProperty("fecha_actualizacion")
+    @JsonbProperty("fechaActualizacion")
     private Date fechaActualizacion;
 
-    @Column(name = "usuario_creacion")
+    @Column(name = "usuario_creo_registro")
     @Schema(required = false, implementation = String.class, example = "user123")
-    @JsonbProperty("usuario_creacion")
+    @JsonbProperty("usuarioCreacion")
     private String usuarioCreacion;
 
-    @Column(name = "usuario_actualizacion")
+    @Column(name = "usuario_ultima_actualizacion")
     @Schema(required = false, implementation = String.class, example = "user123")
-    @JsonbProperty("usuario_actualizacion")
+    @JsonbProperty("usuarioActualizacion")
     private String usuarioActualizacion;
 
 

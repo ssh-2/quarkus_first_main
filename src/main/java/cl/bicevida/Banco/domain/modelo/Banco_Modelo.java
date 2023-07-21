@@ -23,9 +23,9 @@ public class Banco_Modelo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "nombre")
     @Schema(required = false, implementation = String.class, example = "Banco XYZ")
