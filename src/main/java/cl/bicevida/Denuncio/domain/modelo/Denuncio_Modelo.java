@@ -20,9 +20,9 @@ import java.time.LocalDate;
 public class Denuncio_Modelo {
     @Id
     @Column(name = "id", nullable = false)
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id")
-    public Integer id;
+    public Long id;
 
     @Column(name = "fecha_ocurrencia", nullable = true)
     @Schema(required = false, implementation = LocalDate.class, example = "2023-07-17")
@@ -45,34 +45,34 @@ public class Denuncio_Modelo {
     public String descripcionHechos;
 
     @Column(name = "id_tipo_denuncio", nullable = true)
-    @Schema(required = false, implementation = Integer.class, example = "1")
+    @Schema(required = false, implementation = Long.class, example = "1")
     @JsonbProperty("id_tipo_denuncio")
-    public Integer idTipoDenuncio;
+    public Long idTipoDenuncio;
 
     @Column(name = "id_estado", nullable = true)
-    @Schema(required = false, implementation = Integer.class, example = "1")
+    @Schema(required = false, implementation = Long.class, example = "1")
     @JsonbProperty("id_estado")
-    public Integer idEstado;
+    public Long idEstado;
 
     @Column(name = "id_denunciante", nullable = true)
-    @Schema(required = false, implementation = Integer.class, example = "1")
+    @Schema(required = false, implementation = Long.class, example = "1")
     @JsonbProperty("id_denunciante")
-    public Integer idDenunciante;
+    public Long idDenunciante;
 
     @Column(name = "id_siniestrado", nullable = true)
-    @Schema(required = false, implementation = Integer.class, example = "1")
+    @Schema(required = false, implementation = Long.class, example = "1")
     @JsonbProperty("id_siniestrado")
-    public Integer idSiniestrado;
+    public Long idSiniestrado;
 
     @Column(name = "id_titular", nullable = true)
-    @Schema(required = false, implementation = Integer.class, example = "1")
+    @Schema(required = false, implementation = Long.class, example = "1")
     @JsonbProperty("id_titular")
-    public Integer idTitular;
+    public Long idTitular;
 
     @Column(name = "id_canal", nullable = true)
-    @Schema(required = false, implementation = Integer.class, example = "1")
+    @Schema(required = false, implementation = Long.class, example = "1")
     @JsonbProperty("id_canal")
-    public Integer idCanal;
+    public Long idCanal;
 
     @Column(name = "tipo_ingreso", nullable = true)
     @Schema(required = false, implementation = String.class, example = "Tipo de ingreso del denuncio")
@@ -80,24 +80,24 @@ public class Denuncio_Modelo {
     public String tipoIngreso;
 
     @Column(name = "id_linea_negocio", nullable = true)
-    @Schema(required = false, implementation = Integer.class, example = "1")
+    @Schema(required = false, implementation = Long.class, example = "1")
     @JsonbProperty("id_linea_negocio")
-    public Integer idLineaNegocio;
+    public Long idLineaNegocio;
 
     @Column(name = "prefijo_poliza", nullable = true)
-    @Schema(required = false, implementation = Integer.class, example = "123")
+    @Schema(required = false, implementation = Long.class, example = "123")
     @JsonbProperty("prefijo_poliza")
-    public Integer prefijoPoliza;
+    public Long prefijoPoliza;
 
     @Column(name = "numero_poliza", nullable = true)
-    @Schema(required = false, implementation = Integer.class, example = "456")
+    @Schema(required = false, implementation = Long.class, example = "456")
     @JsonbProperty("numero_poliza")
-    public Integer numeroPoliza;
+    public Long numeroPoliza;
 
     @Column(name = "secuencia_poliza", nullable = true)
-    @Schema(required = false, implementation = Integer.class, example = "789")
+    @Schema(required = false, implementation = Long.class, example = "789")
     @JsonbProperty("secuencia_poliza")
-    public Integer secuenciaPoliza;
+    public Long secuenciaPoliza;
 
     @Column(name = "producto", nullable = true)
     @Schema(required = false, implementation = String.class, example = "Producto asociado al denuncio")
@@ -115,9 +115,9 @@ public class Denuncio_Modelo {
     public LocalDate terminoPoliza;
 
     @Column(name = "id_liquidador", nullable = true)
-    @Schema(required = false, implementation = Integer.class, example = "1")
+    @Schema(required = false, implementation = Long.class, example = "1")
     @JsonbProperty("id_liquidador")
-    public Integer idLiquidador;
+    public Long idLiquidador;
 
     @Column(name = "active", nullable = true)
     @Schema(required = false, implementation = Boolean.class, example = "true")

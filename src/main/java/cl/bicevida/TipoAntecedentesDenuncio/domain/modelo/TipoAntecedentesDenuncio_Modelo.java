@@ -22,9 +22,9 @@ import lombok.NoArgsConstructor;
 public class TipoAntecedentesDenuncio_Modelo {
     @Id
     @Column(name = "id", nullable = false)
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id")
-    public Integer id;
+    public Long id;
 
     @ManyToOne
     @JoinColumn(name = "id_tipo_antecedente")

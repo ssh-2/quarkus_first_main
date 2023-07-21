@@ -22,19 +22,14 @@ public class Bitacora_Modelo {
 
     @Id
     @Column(name = "id", nullable = false)
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id")
-    public Integer id;
-
-    @Column(name = "table")
-    @Schema(required = true, implementation = String.class, example = "Table")
-    @JsonbProperty("table")
-    public String table;
+    public Long id;
 
     @Column(name = "id_registro")
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id_registro")
-    public Integer idRegistro;
+    public Long idRegistro;
 
     @Column(name = "accion")
     @Schema(required = true, implementation = String.class, example = "INSERT")

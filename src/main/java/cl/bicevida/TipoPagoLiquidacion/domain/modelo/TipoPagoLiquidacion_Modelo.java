@@ -18,17 +18,17 @@ import lombok.NoArgsConstructor;
 public class TipoPagoLiquidacion_Modelo {
     @Id
     @Column(name = "id", nullable = false)
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id")
-    public Integer id;
+    public Long id;
 
     @Column(name = "nombre", nullable = true)
     @Schema(required = false, implementation = String.class, example = "Transferencia bancaria")
     @JsonbProperty("nombre")
     public String nombre;
 
-    @Column(name = "status", nullable = true)
+    @Column(name = "active", nullable = true)
     @Schema(required = false, implementation = Boolean.class, example = "true")
-    @JsonbProperty("status")
-    public Boolean status;
+    @JsonbProperty("active")
+    public Boolean active;
 }

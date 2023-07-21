@@ -18,12 +18,12 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 public class Liquidaciones_Modelo {
     @Id
     @Column(name = "id", nullable = false)
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id")
-    public Integer id;
+    public Long id;
 
     @Column(name = "id_siniestro")
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id_siniestro")
-    public Integer idSiniestro;
+    public Long idSiniestro;
 }

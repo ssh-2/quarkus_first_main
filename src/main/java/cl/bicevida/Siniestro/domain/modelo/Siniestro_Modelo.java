@@ -24,9 +24,9 @@ import java.time.LocalDate;
 public class Siniestro_Modelo {
     @Id
     @Column(name = "id", nullable = false)
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id")
-    public Integer id;
+    public Long id;
 
     @ManyToOne
     @JoinColumn(name = "id_homologacion_cobertura")
@@ -50,9 +50,9 @@ public class Siniestro_Modelo {
     public LocalDate finCobertura;
 
     @Column(name = "id_denuncio")
-    @Schema(required = false, implementation = Integer.class, example = "1")
+    @Schema(required = false, implementation = Long.class, example = "1")
     @JsonbProperty("id_denuncio")
-    public Integer idDenuncio;
+    public Long idDenuncio;
 
     @Column(name = "capital_informado_legacy")
     @Schema(required = false, implementation = Double.class, example = "1000000.0")

@@ -30,9 +30,9 @@ import java.util.Date;
 public class LiquidacionesDetalle_Modelo {
     @Id
     @Column(name = "id", nullable = false)
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id")
-    public Integer id;
+    public Long id;
 
     @ManyToOne
     @JoinColumn(name = "id_estado")
@@ -79,9 +79,9 @@ public class LiquidacionesDetalle_Modelo {
     public Date fechaPago;
 
     @Column(name = "correlativo", nullable = true)
-    @Schema(required = false, implementation = Integer.class, example = "1")
+    @Schema(required = false, implementation = Long.class, example = "1")
     @JsonbProperty("correlativo")
-    public Integer correlativo;
+    public Long correlativo;
 
     @Column(name = "pago_comercial", nullable = true)
     @Schema(required = false, implementation = Boolean.class, example = "true")
@@ -111,10 +111,10 @@ public class LiquidacionesDetalle_Modelo {
     @JsonbProperty("liquidacion")
     public Liquidaciones_Modelo liquidacion;
 
-    @Column(name = "status", nullable = true)
+    @Column(name = "active", nullable = true)
     @Schema(required = false, implementation = Boolean.class, example = "true")
-    @JsonbProperty("status")
-    public Boolean status;
+    @JsonbProperty("active")
+    public Boolean active;
 
     @ManyToOne
     @JoinColumn(name = "id_motivo_reversa")

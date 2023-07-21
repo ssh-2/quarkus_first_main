@@ -18,9 +18,9 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 public class Cie_Modelo {
     @Id
     @Column(name = "id", nullable = false)
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id")
-    public Integer id;
+    public Long id;
 
     @Column(name = "descripcion")
     @Schema(required = true, implementation = String.class, example = "Descripción del CIE")

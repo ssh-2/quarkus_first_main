@@ -18,14 +18,14 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 public class HomologacionCoberturaLegacy_Modelo {
     @Id
     @Column(name = "id", nullable = false)
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id")
-    public Integer id;
+    public Long id;
 
     @Column(name = "id_cobertura_legacy")
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id_cobertura_legacy")
-    public Integer idCoberturaLegacy;
+    public Long idCoberturaLegacy;
 
     @Column(name = "registro_cmf")
     @Schema(required = true, implementation = String.class, example = "Registro CMF")
@@ -33,9 +33,9 @@ public class HomologacionCoberturaLegacy_Modelo {
     public String registroCMF;
 
     @Column(name = "id_linea_negocio_legacy")
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id_linea_negocio_legacy")
-    public Integer idLineaNegocioLegacy;
+    public Long idLineaNegocioLegacy;
 
     @Column(name = "active")
     @Schema(required = true, implementation = Boolean.class, example = "true")

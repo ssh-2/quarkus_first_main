@@ -18,9 +18,9 @@ import lombok.NoArgsConstructor;
 public class Resolucion_Modelo {
     @Id
     @Column(name = "id", nullable = false)
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id")
-    public Integer id;
+    public Long id;
 
     @Column(name = "causa", nullable = true)
     @Schema(required = false, implementation = String.class, example = "Falta de documentación requerida")
@@ -33,19 +33,19 @@ public class Resolucion_Modelo {
     public String fundamentoLegal;
 
     @Column(name = "id_estado_resolucion", nullable = true)
-    @Schema(required = false, implementation = Integer.class, example = "1")
+    @Schema(required = false, implementation = Long.class, example = "1")
     @JsonbProperty("id_estado_resolucion")
-    public Integer idEstadoResolucion;
+    public Long idEstadoResolucion;
 
     @Column(name = "id_tipo_rechazo", nullable = true)
-    @Schema(required = false, implementation = Integer.class, example = "1")
+    @Schema(required = false, implementation = Long.class, example = "1")
     @JsonbProperty("id_tipo_rechazo")
-    public Integer idTipoRechazo;
+    public Long idTipoRechazo;
 
     @Column(name = "id_siniestro", nullable = true)
-    @Schema(required = false, implementation = Integer.class, example = "1")
+    @Schema(required = false, implementation = Long.class, example = "1")
     @JsonbProperty("id_siniestro")
-    public Integer idSiniestro;
+    public Long idSiniestro;
 
     @Column(name = "active", nullable = true)
     @Schema(required = false, implementation = Boolean.class, example = "true")

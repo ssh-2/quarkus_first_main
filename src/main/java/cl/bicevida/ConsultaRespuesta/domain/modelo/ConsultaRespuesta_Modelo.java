@@ -20,9 +20,9 @@ import java.time.LocalDate;
 public class ConsultaRespuesta_Modelo {
     @Id
     @Column(name = "id", nullable = false)
-    @Schema(required = true, implementation = Integer.class, example = "1")
+    @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id")
-    public Integer id;
+    public Long id;
 
     @Column(name = "descripcion", nullable = true)
     @Schema(required = false, implementation = String.class, example = "Descripción de la respuesta de la consulta")
@@ -35,9 +35,9 @@ public class ConsultaRespuesta_Modelo {
     public Boolean active;
 
     @Column(name = "id_consulta", nullable = true)
-    @Schema(required = false, implementation = Integer.class, example = "1")
+    @Schema(required = false, implementation = Long.class, example = "1")
     @JsonbProperty("id_consulta")
-    public Integer idConsulta;
+    public Long idConsulta;
 
     @Column(name = "rol", nullable = true)
     @Schema(required = false, implementation = String.class, example = "Rol de la respuesta de la consulta")
