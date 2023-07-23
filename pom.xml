@@ -94,6 +94,11 @@
     </dependency>
     <!--BD-->
 
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-hibernate-validator</artifactId>
+    </dependency>
+
 
   </dependencies>
   <build>
