@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "proceso_estado")
 @Data
@@ -31,4 +33,24 @@ public class ProcesoEstado_Modelo {
     @Schema(required = true, implementation = Boolean.class, example = "true")
     @JsonbProperty("active")
     public Boolean active;
+
+    @Column(name = "fecha_creacion")
+    @Schema(required = false, implementation = Date.class, example = "2023-07-17")
+    @JsonbProperty("fechaCreacion")
+    private Date fechaCreacion;
+
+    @Column(name = "fecha_ultima_actualizacion")
+    @Schema(required = false, implementation = Date.class, example = "2023-07-17")
+    @JsonbProperty("fechaActualizacion")
+    private Date fechaActualizacion;
+
+    @Column(name = "usuario_creo_registro")
+    @Schema(required = false, implementation = String.class, example = "user123")
+    @JsonbProperty("usuarioCreacion")
+    private String usuarioCreacion;
+
+    @Column(name = "usuario_ultima_actualizacion")
+    @Schema(required = false, implementation = String.class, example = "user123")
+    @JsonbProperty("usuarioActualizacion")
+    private String usuarioActualizacion;
 }
