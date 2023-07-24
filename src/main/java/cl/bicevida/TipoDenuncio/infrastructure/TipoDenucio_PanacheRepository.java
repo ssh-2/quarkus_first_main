@@ -1,6 +1,6 @@
-package cl.bicevida.TipoDenuncio.domain.modelo.infrastructure;
+package cl.bicevida.TipoDenuncio.infrastructure;
 
-import cl.bicevida.TipoDenuncio.domain.modelo.domain.modelo.TipoDenuncio_Modelo;
+import cl.bicevida.TipoDenuncio.domain.modelo.TipoDenuncio_Modelo;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 

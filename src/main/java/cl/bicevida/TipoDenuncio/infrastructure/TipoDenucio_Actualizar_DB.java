@@ -1,7 +1,7 @@
-package cl.bicevida.TipoDenuncio.domain.modelo.infrastructure;
+package cl.bicevida.TipoDenuncio.infrastructure;
 
-import cl.bicevida.TipoDenuncio.domain.modelo.domain.modelo.TipoDenuncio_Modelo;
-import cl.bicevida.TipoDenuncio.domain.modelo.domain.puertoSalida.ActualizarTipoDenucio_PuertoSalida;
+import cl.bicevida.TipoDenuncio.domain.modelo.TipoDenuncio_Modelo;
+import cl.bicevida.TipoDenuncio.domain.puertoSalida.ActualizarTipoDenucio_PuertoSalida;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 

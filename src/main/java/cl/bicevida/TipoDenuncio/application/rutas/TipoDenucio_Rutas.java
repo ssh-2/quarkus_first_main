@@ -1,9 +1,9 @@
-package cl.bicevida.TipoDenuncio.domain.modelo.application.rutas;
+package cl.bicevida.TipoDenuncio.application.rutas;
 
 
-import cl.bicevida.TipoDenuncio.domain.modelo.application.controladores.*;
-import cl.bicevida.TipoDenuncio.domain.modelo.domain.modelo.TipoDenuncio_Modelo;
-import cl.bicevida.TipoDenuncio.domain.modelo.domain.puertoSalida.*;
+import cl.bicevida.TipoDenuncio.application.controladores.*;
+import cl.bicevida.TipoDenuncio.domain.modelo.TipoDenuncio_Modelo;
+import cl.bicevida.TipoDenuncio.domain.puertoSalida.*;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;

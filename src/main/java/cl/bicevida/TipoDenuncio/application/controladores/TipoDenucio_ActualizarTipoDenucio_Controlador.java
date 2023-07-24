@@ -1,8 +1,8 @@
-package cl.bicevida.TipoDenuncio.domain.modelo.application.controladores;
+package cl.bicevida.TipoDenuncio.application.controladores;
 
-import cl.bicevida.TipoDenuncio.domain.modelo.domain.modelo.TipoDenuncio_Modelo;
-import cl.bicevida.TipoDenuncio.domain.modelo.domain.puertoEntrada.ActualizarTipoDenucio_PuertoEntrada;
-import cl.bicevida.TipoDenuncio.domain.modelo.domain.puertoSalida.ActualizarTipoDenucio_PuertoSalida;
+import cl.bicevida.TipoDenuncio.domain.modelo.TipoDenuncio_Modelo;
+import cl.bicevida.TipoDenuncio.domain.puertoEntrada.ActualizarTipoDenucio_PuertoEntrada;
+import cl.bicevida.TipoDenuncio.domain.puertoSalida.ActualizarTipoDenucio_PuertoSalida;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped

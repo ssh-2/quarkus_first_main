@@ -1,7 +1,7 @@
-package cl.bicevida.TipoDenuncio.domain.modelo.application.controladores;
+package cl.bicevida.TipoDenuncio.application.controladores;
 
-import cl.bicevida.TipoDenuncio.domain.modelo.domain.puertoEntrada.EliminarTipoDenucio_PuertoEntrada;
-import cl.bicevida.TipoDenuncio.domain.modelo.domain.puertoSalida.EliminarTipoDenucio_PuertoSalida;
+import cl.bicevida.TipoDenuncio.domain.puertoEntrada.EliminarTipoDenucio_PuertoEntrada;
+import cl.bicevida.TipoDenuncio.domain.puertoSalida.EliminarTipoDenucio_PuertoSalida;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
