@@ -1,4 +1,4 @@
-package cl.bicevida.TipoDenuncio.domain.modelo;
+package cl.bicevida.TipoDenuncio.domain.modelo.domain.modelo;
 
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;
@@ -9,6 +9,8 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -31,4 +33,25 @@ public class TipoDenuncio_Modelo {
     @Schema(required = true, implementation = Boolean.class, example = "true")
     @JsonbProperty("active")
     public Boolean active;
+
+    @Column(name = "fecha_creacion")
+    @Schema(required = false, implementation = Date.class, example = "2023-07-17")
+    @JsonbProperty("fechaCreacion")
+    private Date fechaCreacion;
+
+    @Column(name = "fecha_ultima_actualizacion")
+    @Schema(required = false, implementation = Date.class, example = "2023-07-17")
+    @JsonbProperty("fechaActualizacion")
+    private Date fechaActualizacion;
+
+    @Column(name = "usuario_creo_registro")
+    @Schema(required = false, implementation = String.class, example = "user123")
+    @JsonbProperty("usuarioCreacion")
+    private String usuarioCreacion;
+
+    @Column(name = "usuario_ultima_actualizacion")
+    @Schema(required = false, implementation = String.class, example = "user123")
+    @JsonbProperty("usuarioActualizacion")
+    private String usuarioActualizacion;
+
 }
