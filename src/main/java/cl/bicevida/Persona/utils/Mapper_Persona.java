@@ -63,8 +63,8 @@ public class Mapper_Persona {
                 tipoPersona,
                 dto.getIdPersonaLegacy()
         );
-        actualizado.setUsuarioActualizacion(dto.getUsuarioCreacion());
-        actualizado.setFechaActualizacion(LocalDateTime.now());
+        actualizado.setUsuarioCreacion(dto.getUsuarioCreacion());
+        actualizado.setFechaCreacion(LocalDateTime.now());
         return entity;
     }
 

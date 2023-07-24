@@ -17,7 +17,7 @@ public class Constants {
 
     public static String REGISTRO_ELIMINADO = "Se ha eliminado con éxito el registro con el ID: ";
 
-    public final static String REGEX_SOLO_LETRAS_SIN_ESPACIO_AL_COMIENZO = "^(?!\\s)^[a-zA-Z ]{1,250}[^\\s]";
+    public final static String REGEX_SOLO_LETRAS_TRIM = "^(?!\\s)^[a-zA-Z ]{1,250}[^\\s]";
 
     public final static String REGEX_SOLO_NUMEROS = "^(?!\\s)^[0-9]+$";
 
