@@ -29,7 +29,7 @@ public class Request_Save_DTO_TipoParentesco {
 
     @NotNull(message=nombreJson + ES_REQUERIDO)
     @Size(min = minNombre,max = maxNombre,message = sizeNombre)
-    @Pattern(regexp  = REGEX_SOLO_LETRAS_SIN_ESPACIO_AL_COMIENZO,message = nombreJson + ERROR_FORMATO_SOLO_LETRAS)
+    @Pattern(regexp  = REGEX_SOLO_LETRAS_TRIM,message = nombreJson + ERROR_FORMATO_SOLO_LETRAS)
     @Schema(required = true, implementation = String.class, example = "Natural")
     @JsonbProperty(nombreJson)
     public String nombre;

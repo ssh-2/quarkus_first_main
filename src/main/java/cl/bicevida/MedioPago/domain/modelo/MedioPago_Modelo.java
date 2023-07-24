@@ -1,7 +1,7 @@
 package cl.bicevida.MedioPago.domain.modelo;
 
 import cl.bicevida.Banco.domain.modelo.Banco_Modelo;
-import cl.bicevida.Persona.domain.modelo.Persona_Modelo;
+import cl.bicevida.Persona.domain.modelo.Entity_Persona;
 import cl.bicevida.TipoCuentaBanco.domain.modelo.TipoCuentaBanco_Modelo;
 import cl.bicevida.TipoMedioPago.domain.modelo.TipoMedioPago_Modelo;
 import jakarta.json.bind.annotation.JsonbProperty;
@@ -58,9 +58,9 @@ public class MedioPago_Modelo {
 
     @ManyToOne
     @JoinColumn(name = "id_persona")
-    @Schema(required = true, implementation = Persona_Modelo.class)
+    @Schema(required = true, implementation = Entity_Persona.class)
     @JsonbProperty("persona")
-    public Persona_Modelo persona;
+    public Entity_Persona persona;
 
     @Column(name = "seleccionada")
     @Schema(required = true, implementation = Boolean.class, example = "true")

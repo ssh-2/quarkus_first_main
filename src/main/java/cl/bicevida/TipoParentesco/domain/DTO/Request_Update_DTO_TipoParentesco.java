@@ -27,7 +27,7 @@ public class Request_Update_DTO_TipoParentesco {
 
     @NotNull(message="[nombre]" + ES_REQUERIDO)
     @Size(min = minNombre,max = maxNombre,message = sizeNombre)
-    @Pattern(regexp  = REGEX_SOLO_LETRAS_SIN_ESPACIO_AL_COMIENZO,message = "[nombre]" + ERROR_FORMATO_SOLO_LETRAS)
+    @Pattern(regexp  = REGEX_SOLO_LETRAS_TRIM,message = "[nombre]" + ERROR_FORMATO_SOLO_LETRAS)
     @Schema(required = true, implementation = String.class, example = "Natural")
     @JsonbProperty("nombre")
     public String nombre;

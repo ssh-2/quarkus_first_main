@@ -29,10 +29,11 @@ public class Mapper_TipoParentesco {
 
     public Entity_TipoParentesco crearEntity(Request_Save_DTO_TipoParentesco dto){
         Entity_TipoParentesco entity = new Entity_TipoParentesco();
-        entity.setNombre(dto.nombre);
-        entity.setUsuarioCreacion(dto.getUsuarioCreacion());
+        entity.setNombre(dto.nombre.trim());
+        entity.setUsuarioCreacion(dto.getUsuarioCreacion().trim());
         entity.setFechaCreacion(LocalDateTime.now());
         return entity;
     }
+
 
 }
