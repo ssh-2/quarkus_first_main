@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -31,7 +32,7 @@ public class Entity_Canal {
     @Column(name = "nombre")
     @Schema(required = false, implementation = String.class, example = "Canal ABC")
     @JsonbProperty("nombre")
-    private String nombre;
+    public String nombre;
 
     @Column(name = "active")
     @Schema(required = false, implementation = Boolean.class, example = "true")
@@ -41,12 +42,12 @@ public class Entity_Canal {
     @Column(name = "fecha_creacion")
     @Schema(required = false, implementation = Date.class, example = "2023-07-17")
     @JsonbProperty("fechaCreacion")
-    private Date fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     @Column(name = "fecha_ultima_actualizacion")
     @Schema(required = false, implementation = Date.class, example = "2023-07-17")
     @JsonbProperty("fechaActualizacion")
-    private Date fechaActualizacion;
+    private LocalDateTime fechaActualizacion;
 
     @Column(name = "usuario_creo_registro")
     @Schema(required = false, implementation = String.class, example = "user123")

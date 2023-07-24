@@ -1,10 +1,18 @@
 package cl.bicevida.Canal.application.rutas;
 
 import cl.bicevida.Canal.application.controladores.*;
+import cl.bicevida.Canal.domain.DTO.Request_Save_DTO_Canal;
+import cl.bicevida.Canal.domain.DTO.Request_Update_DTO_Canal;
 import cl.bicevida.Canal.domain.modelo.Entity_Canal;
 import cl.bicevida.Canal.domain.puertoSalida.*;
+import cl.bicevida.Utils.GeneralErrorResponse;
+import cl.bicevida.Utils.GeneralStringResponse;
+import cl.bicevida.Utils.ValidationErrorResponse;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ValidationException;
+import jakarta.validation.Validator;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -13,6 +21,12 @@ import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import static cl.bicevida.Utils.Constants.REGISTRO_ELIMINADO;
+
 @Path("/api/canal")
 @Produces(value = MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -20,15 +34,18 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 public class Rutas_Canal {
 
     @Inject
-    PuertoSalida_BuscarTodos_Canal todosCanalPuertoSalida;
+    Validator validator;
+
     @Inject
-    PuertoSalida_BusacrPorID_Canal obtenerCanalPuertoSalida;
+    PuertoSalida_BuscarTodos_Canal buscarTodos_PuertoSalida;
     @Inject
-    PuertoSalida_Crear_Canal crearCanalPuertoSalida;
+    PuertoSalida_BusacrPorID_Canal busacrPorID_PuertoSalida;
+    @Inject
+    PuertoSalida_Crear_Canal crear_PuertoSalida;
     @Inject
     PuertoSalida_Actualizar_Canal actualizarCanalPuertoSalida;
     @Inject
-    PuertoSalida_Eliminar_Canal eliminarCanalPuertoSalida;
+    PuertoSalida_Eliminar_Canal eliminar_PuertoSalida;
 
     @GET
     @APIResponses(
@@ -36,12 +53,12 @@ public class Rutas_Canal {
                     @APIResponse(responseCode = "400", description = "No encontrado")}
     )
     @Retry(maxRetries = 3, delay = 3000)
-    @Fallback(fallbackMethod = "fallbackTodosLosCanales")
-    public Response todosLosCanales() {
-        Canal_ObtenerTodosCanal_Controlador controlador = new Canal_ObtenerTodosCanal_Controlador(todosCanalPuertoSalida);
-        return Response.status(200).entity(controlador.obtenerTodosCanal_PuertoEntrada()).build();
+    @Fallback(fallbackMethod = "fallbackTodos")
+    public Response getAll() {
+        Controller_BuscarTodos_Canal controlador = new Controller_BuscarTodos_Canal(buscarTodos_PuertoSalida);
+        return Response.status(Response.Status.OK).entity(controlador.buscarTodos()).build();
     }
-    public Response fallbackTodosLosCanales() {
+    public Response fallbackTodos() {
         return Response.status(503).build();
     }
 
@@ -49,14 +66,12 @@ public class Rutas_Canal {
     @Path("/{id}")
     @Retry(maxRetries = 3, delay = 3000)
     @Fallback(fallbackMethod = "fallbackObtenerCanal")
-    public Response obtenerCanal(@PathParam("id") Long id) {
-        Canal_ObtenerCanal_Controlador controlador = new Canal_ObtenerCanal_Controlador(obtenerCanalPuertoSalida);
-        Entity_Canal canal_encontrado = controlador.obtenerCanal_PuertoEntrada(id);
-        if(canal_encontrado != null) {
-            return Response.status(200).entity(canal_encontrado).build();
-        }
-        else {
-            return Response.status(404).build();
+    public Response getById(@PathParam("id") Long id) throws Exception {
+        try {
+            Controller_BuscarPorID_Canal controlador = new Controller_BuscarPorID_Canal(busacrPorID_PuertoSalida);
+            return Response.status(Response.Status.OK).entity(controlador.buscarPorID_PuertoSalida(id)).build();
+        } catch (NotFoundException e) {
+            return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
         }
     }
 
@@ -65,38 +80,59 @@ public class Rutas_Canal {
     }
 
     @POST
-    @Retry(maxRetries = 3, delay = 3000)
+    @Retry(maxRetries = 3, delay = 3000, abortOn = {ValidationException.class}  )
     @Fallback(fallbackMethod = "fallbackCrearCanal")
-    public Response crearCanal(Entity_Canal data_canal) {
-        Canal_CrearCanal_Controlador controlador = new Canal_CrearCanal_Controlador(crearCanalPuertoSalida);
-        return Response.status(201).entity(controlador.crearCanala_PuertoEntrada(data_canal)).build();
+    public Response crear(Request_Save_DTO_Canal dto) {
+        Set<ConstraintViolation<Request_Save_DTO_Canal>> violations = validator.validate(dto);
+        if(!violations.isEmpty()) {
+            List<String> error = new ArrayList<>();
+            violations.forEach((x -> error.add(x.getMessage())));
+            return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationErrorResponse(error)).build();
+        }
+        Controller_Crear_Canal controlador = new Controller_Crear_Canal(crear_PuertoSalida);
+        return Response.status(Response.Status.OK).entity(controlador.crear(dto)).build();
     }
 
-    public Response fallbackCrearCanal(Entity_Canal canal) {
+    public Response fallbackCrearCanal(Request_Save_DTO_Canal dto) {
         return Response.status(503).build();
     }
 
     @PUT
     @Path("/{id}")
-    @Retry(maxRetries = 3, delay = 3000)
+    @Retry(maxRetries = 3, delay = 3000, abortOn = {NotFoundException.class})
     @Fallback(fallbackMethod = "fallbackActualizarCanal")
-    public Response actualizarCanal(@PathParam("id") Long id, Entity_Canal canal) {
-        Canal_ActualizarCanal_Controlador controlador = new Canal_ActualizarCanal_Controlador(actualizarCanalPuertoSalida);
-        return Response.status(201).entity(controlador.actualizarCanal_PuertoEntrada(id, canal)).build();
+    public Response actualizar(@PathParam("id") Long id, Request_Update_DTO_Canal dto) {
+        Set<ConstraintViolation<Request_Update_DTO_Canal>> violations = validator.validate(dto);
+        if(!violations.isEmpty()) {
+            List<String> errors = new ArrayList<>();
+            violations.forEach(x -> errors.add(x.getMessage()));
+            return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationErrorResponse(errors)).build();
+        }
+
+        try {
+            Controlador_Actualizar_Canal controlador = new Controlador_Actualizar_Canal(actualizarCanalPuertoSalida);
+            return Response.status(201).entity(controlador.actualizar(id, dto)).build();
+        } catch (NotFoundException e) {
+            return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        }
     }
 
-    public Response fallbackActualizarCanal(Long id, Entity_Canal canal) {
+    public Response fallbackActualizarCanal(Long id, Request_Update_DTO_Canal dto) {
         return  Response.status(503).build();
     }
 
     @DELETE
     @Path("/{id}")
-    @Retry(maxRetries = 3, delay = 3000)
+    @Retry(maxRetries = 3, delay = 3000, abortOn = {NotFoundException.class})
     @Fallback(fallbackMethod = "fallbackElimninarCanal")
     public Response eliminarCanal(@PathParam("id")Long id) {
-        Canal_EliminarCanal_Controlador controlador = new Canal_EliminarCanal_Controlador(eliminarCanalPuertoSalida);
-        controlador.eliminarCanal_PuertoEntrada(id);
-        return Response.status(201).build();
+        try {
+            Controller_Eliminar_Canal controlador = new Controller_Eliminar_Canal(eliminar_PuertoSalida);
+            controlador.eliminarPorID(id);
+            return Response.status(Response.Status.OK).entity(new GeneralStringResponse(REGISTRO_ELIMINADO)).build();
+        } catch (NotFoundException e) {
+            return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        }
     }
 
     public Response fallbackElimninarCanal(Long id) {

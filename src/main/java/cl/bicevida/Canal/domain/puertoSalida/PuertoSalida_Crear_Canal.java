@@ -1,7 +1,8 @@
 package cl.bicevida.Canal.domain.puertoSalida;
 
-import cl.bicevida.Canal.domain.modelo.Entity_Canal;
+import cl.bicevida.Canal.domain.DTO.Request_Save_DTO_Canal;
+import cl.bicevida.Canal.domain.DTO.Response_DTO_Canal;
 
 public interface PuertoSalida_Crear_Canal {
-    public Entity_Canal crearCanal_PuertoSalida(Entity_Canal canal);
+    public Response_DTO_Canal crear(Request_Save_DTO_Canal entity);
 }
