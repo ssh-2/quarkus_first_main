@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
+import static cl.bicevida.Persona.utils.Persona_Constants.*;
 import static cl.bicevida.Utils.Constants.*;
 
 @Getter
@@ -17,58 +18,6 @@ import static cl.bicevida.Utils.Constants.*;
 @NoArgsConstructor
 public class Request_Save_DTO_Persona {
 
-    private final String rutJson = "rut";
-    private final int rutMin = 6;
-    private final int rutMax = 8;
-    private final String rutSize = rutJson + DEBE_POSEER_MINIMO + rutMin + DEBE_POSEER_MAXIMO + rutMax;
-
-    private final String dvJson = "dv";
-    private final int dvMax = 1;
-    private final String dvSize = dvJson + " requiere solo: " + dvMax + " caracter; desde el 0 al 9 o la K mayúscula, sin el guion";
-
-    private final String nombresRazonSocialJson = "nombresRazonSocial";
-    private final int nombresRazonSocialMin = 2;
-    private final int nombresRazonSocialMax = 250;
-    private final String nombresRazonSocialSize = nombresRazonSocialJson + DEBE_POSEER_MINIMO + nombresRazonSocialMin + DEBE_POSEER_MAXIMO + nombresRazonSocialMax;
-
-    private final String apellido1Json = "apellido1";
-    private final int apellido1Min = 2;
-    private final int apellido1Max = 250;
-    private final String apellido1Size = apellido1Json + DEBE_POSEER_MINIMO + apellido1Min + DEBE_POSEER_MAXIMO + apellido1Max;
-
-    private final String apellido2Json = "apellido2";
-    private final int apellido2Min = 2;
-    private final int apellido2Max = 250;
-    private final String apellido2Size = apellido2Json + DEBE_POSEER_MINIMO + apellido2Min + DEBE_POSEER_MAXIMO + apellido2Max;
-
-    private final String sexoJson = "sexo";
-    private final int sexoMin = 3;
-    private final int sexoMax = 250;
-    private final String sexoSize = sexoJson + DEBE_POSEER_MINIMO + sexoMin + DEBE_POSEER_MAXIMO + sexoMax;
-
-    private final String emailJson = "email";
-    private final int emailMin = 5;
-    private final int emailMax = 250;
-    private final String emailSize = emailJson + DEBE_POSEER_MINIMO + emailMin + DEBE_POSEER_MAXIMO + emailMax;
-
-    private final String tipo_personaJson = "idTipoPersona";
-    private final int tipo_personaMin = 1;
-    private final int tipo_personaMax = 2;
-    private final String tipo_personaSize = tipo_personaJson + DEBE_POSEER_MINIMO + tipo_personaMin + DEBE_POSEER_MAXIMO + tipo_personaMax;
-
-    private final String usuarioCreacionJson = "usuarioCreacion";
-    private final int usuarioCreacionMin = 1;
-    private final int usuarioCreacionMax = 250;
-    private final String usuarioCreacionSize = usuarioCreacionJson + DEBE_POSEER_MINIMO + usuarioCreacionMin + DEBE_POSEER_MAXIMO + usuarioCreacionMax;
-
-
-    private final String fechaNacimientoJson = "fechaNacimiento";
-    private final int fechaNacimientoMin = 1;
-    private final int fechaNacimientoMax = 10;
-    private final String fechaNacimientoSize = fechaNacimientoJson + DEBE_POSEER_MINIMO + fechaNacimientoMin + DEBE_POSEER_MAXIMO + fechaNacimientoMax;
-
-
-    private final String idPersonaLegacyJson = "idPersonaLegacy";
 
 
     @NotNull(message=rutJson + ES_REQUERIDO)
@@ -112,7 +61,6 @@ public class Request_Save_DTO_Persona {
     @Schema(required = true, implementation = String.class, example = "masculino")
     @JsonbProperty(sexoJson)
     public String sexo;
-
 
 
     @NotNull(message= usuarioCreacionJson + ES_REQUERIDO)
