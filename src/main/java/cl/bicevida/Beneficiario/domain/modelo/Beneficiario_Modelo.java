@@ -1,7 +1,7 @@
 package cl.bicevida.Beneficiario.domain.modelo;
 
 import cl.bicevida.MedioPago.domain.modelo.MedioPago_Modelo;
-import cl.bicevida.Persona.domain.modelo.Persona_Modelo;
+import cl.bicevida.Persona.domain.modelo.Entity_Persona;
 import cl.bicevida.Siniestro.domain.modelo.Siniestro_Modelo;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;
@@ -35,9 +35,9 @@ public class Beneficiario_Modelo {
 
     @ManyToOne
     @JoinColumn(name = "id_persona_beneficiario")
-    @Schema(required = true, implementation = Persona_Modelo.class)
+    @Schema(required = true, implementation = Entity_Persona.class)
     @JsonbProperty("persona_beneficiario")
-    public Persona_Modelo personaBeneficiario;
+    public Entity_Persona personaBeneficiario;
 
     @Column(name = "participacion")
     @Schema(required = false, implementation = Double.class, example = "0.5")

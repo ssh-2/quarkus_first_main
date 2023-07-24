@@ -29,8 +29,8 @@ public class Mapper_TipoPersona {
 
     public Entity_TipoPersona crearEntity(Request_Save_DTO_TipoPersona dto){
         Entity_TipoPersona entity = new Entity_TipoPersona();
-        entity.setNombre(dto.nombre);
-        entity.setUsuarioCreacion(dto.getUsuarioCreacion());
+        entity.setNombre(dto.nombre.trim());
+        entity.setUsuarioCreacion(dto.getUsuarioCreacion().trim());
         entity.setFechaCreacion(LocalDateTime.now());
         return entity;
     }

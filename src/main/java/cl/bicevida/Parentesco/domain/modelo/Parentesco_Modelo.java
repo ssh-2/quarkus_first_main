@@ -1,6 +1,6 @@
 package cl.bicevida.Parentesco.domain.modelo;
 
-import cl.bicevida.Persona.domain.modelo.Persona_Modelo;
+import cl.bicevida.Persona.domain.modelo.Entity_Persona;
 import cl.bicevida.TipoParentesco.domain.modelo.Entity_TipoParentesco;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;
@@ -28,15 +28,15 @@ public class Parentesco_Modelo {
 
     @ManyToOne
     @JoinColumn(name = "id_pariente")
-    @Schema(required = true, implementation = Persona_Modelo.class)
+    @Schema(required = true, implementation = Entity_Persona.class)
     @JsonbProperty("pariente")
-    public Persona_Modelo pariente;
+    public Entity_Persona pariente;
 
     @ManyToOne
     @JoinColumn(name = "id_pariente_relacion")
-    @Schema(required = true, implementation = Persona_Modelo.class)
+    @Schema(required = true, implementation = Entity_Persona.class)
     @JsonbProperty("pariente_relacion")
-    public Persona_Modelo parienteRelacion;
+    public Entity_Persona parienteRelacion;
 
     @ManyToOne
     @JoinColumn(name = "id_tipo_parentesco")

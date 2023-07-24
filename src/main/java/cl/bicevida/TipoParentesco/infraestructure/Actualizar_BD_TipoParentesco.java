@@ -34,8 +34,8 @@ public class Actualizar_BD_TipoParentesco implements PuertoSalida_Actualizar_Tip
     public Response_DTO_TipoParentesco actualizar(Long id, Request_Update_DTO_TipoParentesco dto) {
         Entity_TipoParentesco entity = repository.findByIdOptional(id)
                 .orElseThrow(()-> new NotFoundException(NOT_FOUND_BY_ID+id));
-        entity.setNombre(dto.getNombre());
-        entity.setUsuarioActualizacion(dto.getUsuarioActualizacion());
+        entity.setNombre(dto.getNombre().trim());
+        entity.setUsuarioActualizacion(dto.getUsuarioActualizacion().trim());
         entity.setFechaActualizacion(LocalDateTime.now());
         repository.persist(entity);
         return mapper.crearDTO(entity);

@@ -1,9 +1,9 @@
-package cl.bicevida.TipoPersona.application.Rutas;
+package cl.bicevida.Persona.application.Rutas;
 
-import cl.bicevida.TipoPersona.application.Controllers.*;
-import cl.bicevida.TipoPersona.domain.DTO.Request_Save_DTO_TipoPersona;
-import cl.bicevida.TipoPersona.domain.DTO.Request_Update_DTO_TipoPersona;
-import cl.bicevida.TipoPersona.domain.puertoSalida.*;
+import cl.bicevida.Persona.application.Controllers.*;
+import cl.bicevida.Persona.domain.DTO.Request_Save_DTO_Persona;
+import cl.bicevida.Persona.domain.DTO.Request_Update_DTO_Persona;
+import cl.bicevida.Persona.domain.puertoSalida.*;
 import cl.bicevida.Utils.GeneralErrorResponse;
 import cl.bicevida.Utils.GeneralStringResponse;
 import cl.bicevida.Utils.ValidationErrorResponse;
@@ -15,6 +15,7 @@ import jakarta.validation.Validator;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Retry;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -29,25 +30,26 @@ import java.util.Set;
 import static cl.bicevida.Utils.Constants.REGISTRO_ELIMINADO;
 
 
-@Path("/api/tipo-persona")
+@Path("/api/persona")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Transactional(Transactional.TxType.SUPPORTS)
-public class TipoPersona_Rutas {
+@Slf4j
+public class Rutas_Persona {
 
     @Inject
     Validator validator;
 
     @Inject
-    PuertoSalida_BuscarTodos_TipoPersona buscarTodos_PuertoSalida;
+    PuertoSalida_BuscarTodos_Persona buscarTodos_PuertoSalida;
     @Inject
-    PuertoSalida_BuscarPorID_TipoPersona buscarPorId_PuertoSalida;
+    PuertoSalida_BuscarPorID_Persona buscarPorId_PuertoSalida;
     @Inject
-    PuertoSalida_Crear_TipoPersona crear_PuertoSalida;
+    PuertoSalida_Crear_Persona crear_PuertoSalida;
     @Inject
-    PuertoSalida_Actualizar_TipoPersona actualizar_PuertoSalida;
+    PuertoSalida_Actualizar_Persona actualizar_PuertoSalida;
     @Inject
-    PuertoSalida_Eliminar_TipoPersona eliminar_PuertoSalida;
+    PuertoSalida_Eliminar_Persona eliminar_PuertoSalida;
 
     @GET
     @Operation(summary = "Listado con todos los registros en la tabla", description = "Devuelve lista con todos los registros en la tabla, excepto campos con valor nulo")
@@ -55,7 +57,7 @@ public class TipoPersona_Rutas {
     @Retry(maxRetries = 3, delay = 3000)
     @Fallback(fallbackMethod = "fallbackTodos")
     public Response getAll() {
-        Controller_BuscarTodos_TipoPersona controlador = new Controller_BuscarTodos_TipoPersona(buscarTodos_PuertoSalida);
+        Controller_BuscarTodos_Persona controlador = new Controller_BuscarTodos_Persona(buscarTodos_PuertoSalida);
         return Response.status(Response.Status.OK).entity(controlador.buscarTodos()).build();
     }
 
@@ -69,7 +71,7 @@ public class TipoPersona_Rutas {
     @Fallback(fallbackMethod = "fallbackObtener")
     public Response getById(@PathParam("id") long id) throws Exception {
         try {
-            Controller_BuscarPorId_TipoPersona controlador = new Controller_BuscarPorId_TipoPersona(buscarPorId_PuertoSalida);
+            Controller_BuscarPorId_Persona controlador = new Controller_BuscarPorId_Persona(buscarPorId_PuertoSalida);
             return Response.status(Response.Status.OK).entity(controlador.buscarPorID(id)).build();
         } catch (NotFoundException e) {
             return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
@@ -81,29 +83,35 @@ public class TipoPersona_Rutas {
     }
 
     @POST
-    @Retry(maxRetries = 3, delay = 3000, abortOn = {ValidationException.class})
+    @Retry(maxRetries = 3, delay = 3000, abortOn = {NotFoundException.class,ProcessingException.class,ValidationException.class,BadRequestException.class})
     @Fallback(fallbackMethod = "fallbackCrear")
-    public Response crear(Request_Save_DTO_TipoPersona dto) {
-        Set<ConstraintViolation<Request_Save_DTO_TipoPersona>> violations = validator.validate(dto);
+    public Response crear(Request_Save_DTO_Persona dto) {
+        log.info("[POST] - Se Realizo una llamada para crear una persona");
+        Set<ConstraintViolation<Request_Save_DTO_Persona>> violations = validator.validate(dto);
         if (!violations.isEmpty()) {
             List<String> errors = new ArrayList<>();
             violations.forEach(x -> errors.add(x.getMessage()));
             return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationErrorResponse(errors)).build();
         }
-        Controller_Crear_TipoPersona controlador = new Controller_Crear_TipoPersona(crear_PuertoSalida);
-        return Response.status(Response.Status.OK).entity(controlador.crear(dto)).build();
+        try{
+            Controller_Crear_Persona controlador = new Controller_Crear_Persona(crear_PuertoSalida);
+            return Response.status(Response.Status.OK).entity(controlador.crear(dto)).build();
+        } catch (BadRequestException | NotFoundException e){
+            return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        }
     }
 
-    public Response fallbackCrear(Request_Save_DTO_TipoPersona dto) {
+    public Response fallbackCrear(Request_Save_DTO_Persona dto) {
         return Response.status(503).build();
     }
+
 
     @PUT
     @Path("/{id}")
     @Retry(maxRetries = 3, delay = 3000, abortOn = {NotFoundException.class})
     @Fallback(fallbackMethod = "fallbackActualizar")
-    public Response actualizar(@PathParam("id") long id, Request_Update_DTO_TipoPersona dto) {
-        Set<ConstraintViolation<Request_Update_DTO_TipoPersona>> violations = validator.validate(dto);
+    public Response actualizar(@PathParam("id") long id, Request_Update_DTO_Persona dto) {
+        Set<ConstraintViolation<Request_Update_DTO_Persona>> violations = validator.validate(dto);
         if (!violations.isEmpty()) {
             List<String> errors = new ArrayList<>();
             violations.forEach(x -> errors.add(x.getMessage()));
@@ -111,7 +119,7 @@ public class TipoPersona_Rutas {
         }
 
         try {
-            Controller_Actualizar_TipoPersona controlador = new Controller_Actualizar_TipoPersona(actualizar_PuertoSalida);
+            Controller_Actualizar_Persona controlador = new Controller_Actualizar_Persona(actualizar_PuertoSalida);
             return Response.status(Response.Status.OK).entity(controlador.actualizar(id, dto)).build();
         } catch (NotFoundException e) {
             return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
@@ -119,7 +127,7 @@ public class TipoPersona_Rutas {
 
     }
 
-    public Response fallbackActualizar(long id, Request_Update_DTO_TipoPersona dto) {
+    public Response fallbackActualizar(long id, Request_Update_DTO_Persona dto) {
         return Response.status(503).build();
     }
 
@@ -129,7 +137,7 @@ public class TipoPersona_Rutas {
     @Fallback(fallbackMethod = "fallbackEliminar")
     public Response delete(@PathParam("id") long id) {
         try {
-            Controller_Eliminar_TipoPersona controlador = new Controller_Eliminar_TipoPersona(eliminar_PuertoSalida);
+            Controller_Eliminar_Persona controlador = new Controller_Eliminar_Persona(eliminar_PuertoSalida);
             controlador.eliminarPorID(id);
             return Response.status(Response.Status.OK).entity(new GeneralStringResponse(REGISTRO_ELIMINADO+id)).build();
         } catch (NotFoundException e) {

@@ -17,7 +17,7 @@ public class Response_DTO_TipoParentesco {
     @JsonbProperty("id")
     public Long id;
 
-    @Schema(required = true, implementation = String.class, example = "Natural")
+    @Schema(required = true , implementation = String.class, example = "Natural")
     @JsonbProperty("nombre")
     public String nombre;
 
