@@ -1,7 +1,7 @@
 package cl.bicevida.TipoAntecedentesDenuncio.domain.modelo;
 
 import cl.bicevida.TipoAntecedentes.domain.modelo.TipoAntecedentes_Modelo;
-import cl.bicevida.TipoDenuncio.domain.modelo.TipoDenuncio_Modelo;
+import cl.bicevida.TipoDenuncio.domain.modelo.Entity_TipoDenucio;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,9 +34,9 @@ public class TipoAntecedentesDenuncio_Modelo {
 
     @ManyToOne
     @JoinColumn(name = "id_tipo_denuncio")
-    @Schema(required = true, implementation = TipoDenuncio_Modelo.class)
+    @Schema(required = true, implementation = Entity_TipoDenucio.class)
     @JsonbProperty("tipo_denuncio")
-    public TipoDenuncio_Modelo tipoDenuncio;
+    public Entity_TipoDenucio tipoDenuncio;
 
     @Column(name = "active")
     @Schema(required = true, implementation = Boolean.class, example = "true")

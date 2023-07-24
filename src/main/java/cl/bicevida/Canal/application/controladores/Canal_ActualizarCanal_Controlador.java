@@ -1,21 +1,21 @@
 package cl.bicevida.Canal.application.controladores;
 
-import cl.bicevida.Canal.domain.modelo.Canal_Modelo;
-import cl.bicevida.Canal.domain.puertoEntrada.ActualizarCanal_PuertoEntrada;
-import cl.bicevida.Canal.domain.puertoSalida.ActualizarCanal_PuertoSalida;
+import cl.bicevida.Canal.domain.modelo.Entity_Canal;
+import cl.bicevida.Canal.domain.puertoEntrada.PuertoEntrada_Actualizar_Canal;
+import cl.bicevida.Canal.domain.puertoSalida.PuertoSalida_Actualizar_Canal;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class Canal_ActualizarCanal_Controlador implements ActualizarCanal_PuertoEntrada {
+public class Canal_ActualizarCanal_Controlador implements PuertoEntrada_Actualizar_Canal {
 
-    private ActualizarCanal_PuertoSalida actualizarCanalPuertoSalida;
+    private PuertoSalida_Actualizar_Canal actualizarCanalPuertoSalida;
 
-    public Canal_ActualizarCanal_Controlador(ActualizarCanal_PuertoSalida actualizarCanalPuertoSalida) {
+    public Canal_ActualizarCanal_Controlador(PuertoSalida_Actualizar_Canal actualizarCanalPuertoSalida) {
         this.actualizarCanalPuertoSalida = actualizarCanalPuertoSalida;
     }
 
     @Override
-    public Canal_Modelo actualizarCanal_PuertoEntrada(Long id, Canal_Modelo canal) {
+    public Entity_Canal actualizarCanal_PuertoEntrada(Long id, Entity_Canal canal) {
         return actualizarCanalPuertoSalida.actualizarCanal_PuertoSalida(id, canal);
     }
 }

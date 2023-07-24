@@ -1,16 +1,16 @@
 package cl.bicevida.Canal.application.controladores;
 
 
-import cl.bicevida.Canal.domain.puertoEntrada.EliminarCanal_PuertoEntrada;
-import cl.bicevida.Canal.domain.puertoSalida.EliminarCanal_PuertoSalida;
+import cl.bicevida.Canal.domain.puertoEntrada.PuertoEntrada_Eliminar_Canal;
+import cl.bicevida.Canal.domain.puertoSalida.PuertoSalida_Eliminar_Canal;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class Canal_EliminarCanal_Controlador implements EliminarCanal_PuertoEntrada {
+public class Canal_EliminarCanal_Controlador implements PuertoEntrada_Eliminar_Canal {
 
-    private EliminarCanal_PuertoSalida eliminarCanalPuertoSalida;
+    private PuertoSalida_Eliminar_Canal eliminarCanalPuertoSalida;
 
-    public Canal_EliminarCanal_Controlador(EliminarCanal_PuertoSalida eliminarCanalPuertoSalida) {
+    public Canal_EliminarCanal_Controlador(PuertoSalida_Eliminar_Canal eliminarCanalPuertoSalida) {
         this.eliminarCanalPuertoSalida = eliminarCanalPuertoSalida;
     }
 

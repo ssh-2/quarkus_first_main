@@ -1,17 +1,17 @@
 package cl.bicevida.Canal.infrastructure;
 
-import cl.bicevida.Canal.domain.modelo.Canal_Modelo;
-import cl.bicevida.Canal.domain.puertoSalida.ObtenerCanal_PuertoSalida;
+import cl.bicevida.Canal.domain.modelo.Entity_Canal;
+import cl.bicevida.Canal.domain.puertoSalida.PuertoSalida_BusacrPorID_Canal;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class Canal_ObtenerCanal_DB implements ObtenerCanal_PuertoSalida {
+public class Canal_ObtenerCanal_DB implements PuertoSalida_BusacrPorID_Canal {
     @Inject
-    Canal_PanacheRepository repository;
+    PanacheRepository_Canal repository;
 
     @Override
-    public Canal_Modelo obtenerCanal_PuertoSalida(Long id) {
+    public Entity_Canal obtenerCanal_PuertoSalida(Long id) {
         return repository.findById(id);
     }
 }
