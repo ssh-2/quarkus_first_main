@@ -1,7 +1,9 @@
 package cl.bicevida.Liquidador.domain.puertoSalida;
 
+import cl.bicevida.Liquidador.domain.DTO.Request_Update_DTO_Liquidador;
+import cl.bicevida.Liquidador.domain.DTO.Response_DTO_Liquidador;
 import cl.bicevida.Liquidador.domain.modelo.Entity_Liquidador;
 
 public interface PuertoSalida_Actualizar_Liquidador {
-    public Entity_Liquidador actualizarLiquidador_PuertoSalida(Long id, Entity_Liquidador data_liquidador);
+    public Response_DTO_Liquidador actualizar(Long id, Request_Update_DTO_Liquidador dto);
 }

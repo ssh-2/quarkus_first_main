@@ -7,14 +7,14 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class Controller_Eliminar_Liquidador implements PuertoEntrada_Eliminar_Liquidador {
 
-    private PuertoSalida_Eliminar_Liquidador eliminarLiquidadorPuertoSalida;
+    private final PuertoSalida_Eliminar_Liquidador puertoSalida;
 
-    public Controller_Eliminar_Liquidador(PuertoSalida_Eliminar_Liquidador eliminarLiquidadorPuertoSalida) {
-        this.eliminarLiquidadorPuertoSalida = eliminarLiquidadorPuertoSalida;
+    public Controller_Eliminar_Liquidador(PuertoSalida_Eliminar_Liquidador puertoSalida) {
+        this.puertoSalida = puertoSalida;
     }
 
     @Override
-    public void eliminarLiquidador_PuertoEntrada(Long id) {
-        eliminarLiquidadorPuertoSalida.eliminarLiquidador_PuertoSalida(id);
+    public void eliminarPorID(Long id) {
+        puertoSalida.eliminarPorID(id);
     }
 }
