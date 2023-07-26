@@ -1,10 +1,7 @@
 package cl.bicevida.TipoDenuncio.domain.modelo;
 
 import jakarta.json.bind.annotation.JsonbProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +17,7 @@ import java.util.Date;
 @Table(name = "tipo_denuncio")
 public class Entity_TipoDenucio {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id")

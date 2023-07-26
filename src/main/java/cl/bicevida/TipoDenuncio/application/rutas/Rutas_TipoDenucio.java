@@ -2,6 +2,7 @@ package cl.bicevida.TipoDenuncio.application.rutas;
 
 
 import cl.bicevida.Canal.application.controladores.Controller_BuscarPorID_Canal;
+import cl.bicevida.TipoConsulta.domain.puertoSalida.PuertoSalida_BuscarPorID_TipoConsulta;
 import cl.bicevida.TipoDenuncio.application.controladores.*;
 import cl.bicevida.TipoDenuncio.domain.DTO.Request_Save_DTO_TipoDenucio;
 import cl.bicevida.TipoDenuncio.domain.DTO.Request_Update_DTO_TipoDenucio;
@@ -29,7 +30,7 @@ import java.util.Set;
 
 import static cl.bicevida.Utils.Constants.REGISTRO_ELIMINADO;
 
-@Path("/api/tipoDenucio")
+@Path("/api/tipo-denucio")
 @Produces(value = MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Transactional(Transactional.TxType.SUPPORTS)

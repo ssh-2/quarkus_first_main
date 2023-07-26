@@ -1,15 +1,13 @@
 package cl.bicevida.TipoConsulta.domain.modelo;
 
 import jakarta.json.bind.annotation.JsonbProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -17,8 +15,9 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "tipo_consulta")
-public class TipoConsulta_Modelo {
+public class Entity_TipoConsulta {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     @Schema(required = true, implementation = Long.class, example = "1")
     @JsonbProperty("id")
@@ -37,12 +36,12 @@ public class TipoConsulta_Modelo {
     @Column(name = "fecha_creacion")
     @Schema(required = false, implementation = Date.class, example = "2023-07-17")
     @JsonbProperty("fechaCreacion")
-    private Date fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     @Column(name = "fecha_ultima_actualizacion")
     @Schema(required = false, implementation = Date.class, example = "2023-07-17")
     @JsonbProperty("fechaActualizacion")
-    private Date fechaActualizacion;
+    private LocalDateTime fechaActualizacion;
 
     @Column(name = "usuario_creo_registro")
     @Schema(required = false, implementation = String.class, example = "user123")
