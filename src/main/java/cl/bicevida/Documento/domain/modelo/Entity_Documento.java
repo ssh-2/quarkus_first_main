@@ -2,21 +2,16 @@ package cl.bicevida.Documento.domain.modelo;
 
 import cl.bicevida.Denuncio.domain.modelo.Denuncio_Modelo;
 import jakarta.json.bind.annotation.JsonbProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import lombok.Data;
 
 @Entity
 @Table(name = "documentos")
 @Data
-public class Documento_Modelo {
+public class Entity_Documento {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     @Schema(required = true, implementation = Long.class)
     @JsonbProperty("id")
