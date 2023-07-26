@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -37,12 +38,12 @@ public class Entity_ProcesoEstado {
     @Column(name = "fecha_creacion")
     @Schema(required = false, implementation = Date.class, example = "2023-07-17")
     @JsonbProperty("fechaCreacion")
-    private Date fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     @Column(name = "fecha_ultima_actualizacion")
     @Schema(required = false, implementation = Date.class, example = "2023-07-17")
     @JsonbProperty("fechaActualizacion")
-    private Date fechaActualizacion;
+    private LocalDateTime fechaActualizacion;
 
     @Column(name = "usuario_creo_registro")
     @Schema(required = false, implementation = String.class, example = "user123")

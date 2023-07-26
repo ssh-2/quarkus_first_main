@@ -38,7 +38,7 @@ public class Rutas_Canal {
     @Inject
     PuertoSalida_BuscarTodos_Canal buscarTodos_PuertoSalida;
     @Inject
-    PuertoSalida_BuscarPorID_Canal busacrPorID_PuertoSalida;
+    PuertoSalida_BuscarPorID_Canal buscarPorId_PuertoSalida;
     @Inject
     PuertoSalida_Crear_Canal crear_PuertoSalida;
     @Inject
@@ -67,7 +67,7 @@ public class Rutas_Canal {
     @Fallback(fallbackMethod = "fallbackObtenerCanal")
     public Response getById(@PathParam("id") Long id) throws Exception {
         try {
-            Controller_BuscarPorID_Canal controlador = new Controller_BuscarPorID_Canal(busacrPorID_PuertoSalida);
+            Controller_BuscarPorID_Canal controlador = new Controller_BuscarPorID_Canal(buscarPorId_PuertoSalida);
             return Response.status(Response.Status.OK).entity(controlador.buscarPorID_PuertoEntrada(id)).build();
         } catch (NotFoundException e) {
             return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
@@ -109,7 +109,7 @@ public class Rutas_Canal {
         }
 
         try {
-            Controlador_Actualizar_Canal controlador = new Controlador_Actualizar_Canal(actualizarCanalPuertoSalida);
+            Controller_Actualizar_Canal controlador = new Controller_Actualizar_Canal(actualizarCanalPuertoSalida);
             return Response.status(Response.Status.OK).entity(controlador.actualizar(id, dto)).build();
         } catch (NotFoundException e) {
             return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();

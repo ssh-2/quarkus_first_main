@@ -7,11 +7,11 @@ import cl.bicevida.Canal.domain.puertoSalida.PuertoSalida_Actualizar_Canal;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class Controlador_Actualizar_Canal implements PuertoEntrada_Actualizar_Canal {
+public class Controller_Actualizar_Canal implements PuertoEntrada_Actualizar_Canal {
 
     private final PuertoSalida_Actualizar_Canal puertoSalida;
 
-    public Controlador_Actualizar_Canal(PuertoSalida_Actualizar_Canal puertoSalida) {
+    public Controller_Actualizar_Canal(PuertoSalida_Actualizar_Canal puertoSalida) {
         this.puertoSalida = puertoSalida;
     }
 

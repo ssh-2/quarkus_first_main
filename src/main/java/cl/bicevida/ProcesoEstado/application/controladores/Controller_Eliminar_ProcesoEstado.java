@@ -7,14 +7,14 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class Controller_Eliminar_ProcesoEstado implements PuertoEntrada_Eliminar_ProcesoEstado {
 
-    private PuertoSalida_Eliminar_ProcesoEstado eliminarProcesoEstadoPuertoSalida;
+    private PuertoSalida_Eliminar_ProcesoEstado puertoSalida;
 
-    public Controller_Eliminar_ProcesoEstado(PuertoSalida_Eliminar_ProcesoEstado eliminarProcesoEstadoPuertoSalida) {
-        this.eliminarProcesoEstadoPuertoSalida = eliminarProcesoEstadoPuertoSalida;
+    public Controller_Eliminar_ProcesoEstado(PuertoSalida_Eliminar_ProcesoEstado puertoSalida) {
+        this.puertoSalida = puertoSalida;
     }
 
     @Override
-    public void eliminarProcesoEstado_PuertoEntrada(Long id) {
-        eliminarProcesoEstadoPuertoSalida.eliminarPrcesoEstado_PuertoSalida(id);
+    public void eliminarPorID(Long id) {
+        puertoSalida.eliminarPorID(id);
     }
 }
