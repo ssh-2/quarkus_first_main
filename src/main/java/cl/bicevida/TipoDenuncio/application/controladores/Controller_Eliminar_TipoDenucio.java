@@ -7,14 +7,14 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class Controller_Eliminar_TipoDenucio implements PuertoEntrada_Eliminar_TipoDenucio {
 
-    private PuertoSalida_Eliminar_TipoDenucio eliminarTipoDenucioPuertoSalida;
+    private PuertoSalida_Eliminar_TipoDenucio puertoSalida;
 
-    public Controller_Eliminar_TipoDenucio(PuertoSalida_Eliminar_TipoDenucio eliminarTipoDenucioPuertoSalida) {
-        this.eliminarTipoDenucioPuertoSalida = eliminarTipoDenucioPuertoSalida;
+    public Controller_Eliminar_TipoDenucio(PuertoSalida_Eliminar_TipoDenucio puertoSalida) {
+        this.puertoSalida = puertoSalida;
     }
 
     @Override
-    public void eliminarTipoDenucio_PuertoEntrada(Long id) {
-        eliminarTipoDenucioPuertoSalida.eliminarTipoDenucio_PuertoSalida(id);
+    public void eliminarPorID(Long id) {
+        puertoSalida.eliminarPorID(id);
     }
 }

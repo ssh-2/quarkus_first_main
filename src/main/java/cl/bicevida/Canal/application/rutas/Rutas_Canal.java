@@ -3,7 +3,6 @@ package cl.bicevida.Canal.application.rutas;
 import cl.bicevida.Canal.application.controladores.*;
 import cl.bicevida.Canal.domain.DTO.Request_Save_DTO_Canal;
 import cl.bicevida.Canal.domain.DTO.Request_Update_DTO_Canal;
-import cl.bicevida.Canal.domain.modelo.Entity_Canal;
 import cl.bicevida.Canal.domain.puertoSalida.*;
 import cl.bicevida.Utils.GeneralErrorResponse;
 import cl.bicevida.Utils.GeneralStringResponse;
@@ -39,7 +38,7 @@ public class Rutas_Canal {
     @Inject
     PuertoSalida_BuscarTodos_Canal buscarTodos_PuertoSalida;
     @Inject
-    PuertoSalida_BusacrPorID_Canal busacrPorID_PuertoSalida;
+    PuertoSalida_BuscarPorID_Canal busacrPorID_PuertoSalida;
     @Inject
     PuertoSalida_Crear_Canal crear_PuertoSalida;
     @Inject
@@ -69,7 +68,7 @@ public class Rutas_Canal {
     public Response getById(@PathParam("id") Long id) throws Exception {
         try {
             Controller_BuscarPorID_Canal controlador = new Controller_BuscarPorID_Canal(busacrPorID_PuertoSalida);
-            return Response.status(Response.Status.OK).entity(controlador.buscarPorID_PuertoSalida(id)).build();
+            return Response.status(Response.Status.OK).entity(controlador.buscarPorID_PuertoEntrada(id)).build();
         } catch (NotFoundException e) {
             return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
         }
@@ -111,7 +110,7 @@ public class Rutas_Canal {
 
         try {
             Controlador_Actualizar_Canal controlador = new Controlador_Actualizar_Canal(actualizarCanalPuertoSalida);
-            return Response.status(201).entity(controlador.actualizar(id, dto)).build();
+            return Response.status(Response.Status.OK).entity(controlador.actualizar(id, dto)).build();
         } catch (NotFoundException e) {
             return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
         }

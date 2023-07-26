@@ -1,6 +1,7 @@
 package cl.bicevida.TipoDenuncio.application.controladores;
 
-import cl.bicevida.TipoDenuncio.domain.modelo.Entity_TipoDenucio;
+import cl.bicevida.TipoDenuncio.domain.DTO.Request_Update_DTO_TipoDenucio;
+import cl.bicevida.TipoDenuncio.domain.DTO.Response_DTO_TipoDenucio;
 import cl.bicevida.TipoDenuncio.domain.puertoEntrada.PuertoEntrada_Actualizar_TipoDenucio;
 import cl.bicevida.TipoDenuncio.domain.puertoSalida.PuertoSalida_Actualizar_TipoDenucio;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -8,14 +9,14 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class Controller_Actualizar_TipoDenucio implements PuertoEntrada_Actualizar_TipoDenucio {
 
-    private PuertoSalida_Actualizar_TipoDenucio actualizarTipoDenucioPuertoSalida;
+    private PuertoSalida_Actualizar_TipoDenucio puertoSalida;
 
-    public Controller_Actualizar_TipoDenucio(PuertoSalida_Actualizar_TipoDenucio actualizarTipoDenucioPuertoSalida) {
-        this.actualizarTipoDenucioPuertoSalida = actualizarTipoDenucioPuertoSalida;
+    public Controller_Actualizar_TipoDenucio(PuertoSalida_Actualizar_TipoDenucio puertoSalida) {
+        this.puertoSalida = puertoSalida;
     }
 
     @Override
-    public Entity_TipoDenucio actualizarTipoDenucio_PuertoEntrada(Long id, Entity_TipoDenucio tipoDenucio) {
-        return actualizarTipoDenucioPuertoSalida.actualizarTipoDenucio_PuertoSalida(id, tipoDenucio);
+    public Response_DTO_TipoDenucio actualizar(Long id, Request_Update_DTO_TipoDenucio dtoIn) {
+        return puertoSalida.actualizar(id, dtoIn);
     }
 }

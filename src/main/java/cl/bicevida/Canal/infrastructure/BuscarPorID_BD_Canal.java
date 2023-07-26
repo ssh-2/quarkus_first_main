@@ -2,7 +2,7 @@ package cl.bicevida.Canal.infrastructure;
 
 import cl.bicevida.Canal.domain.DTO.Response_DTO_Canal;
 import cl.bicevida.Canal.domain.modelo.Entity_Canal;
-import cl.bicevida.Canal.domain.puertoSalida.PuertoSalida_BusacrPorID_Canal;
+import cl.bicevida.Canal.domain.puertoSalida.PuertoSalida_BuscarPorID_Canal;
 import cl.bicevida.Canal.utils.Mapper_Canal;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.NotFoundException;
@@ -12,7 +12,7 @@ import static cl.bicevida.Utils.Constants.*;
 
 @ApplicationScoped
 @Slf4j
-public class BuscarPorID_BD_Canal implements PuertoSalida_BusacrPorID_Canal {
+public class BuscarPorID_BD_Canal implements PuertoSalida_BuscarPorID_Canal {
 
     private final PanacheRepository_Canal repository;
 
