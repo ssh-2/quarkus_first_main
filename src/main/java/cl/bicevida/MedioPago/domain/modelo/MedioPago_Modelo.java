@@ -2,7 +2,7 @@ package cl.bicevida.MedioPago.domain.modelo;
 
 import cl.bicevida.Banco.domain.modelo.Banco_Modelo;
 import cl.bicevida.Persona.domain.modelo.Entity_Persona;
-import cl.bicevida.TipoCuentaBanco.domain.modelo.TipoCuentaBanco_Modelo;
+import cl.bicevida.TipoCuentaBanco.domain.modelo.Entity_TipoCuentaBanco;
 import cl.bicevida.TipoMedioPago.domain.modelo.TipoMedioPago_Modelo;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;
@@ -36,9 +36,9 @@ public class MedioPago_Modelo {
 
     @ManyToOne
     @JoinColumn(name = "id_tipo_cuenta_banco")
-    @Schema(required = true, implementation = TipoCuentaBanco_Modelo.class)
+    @Schema(required = true, implementation = Entity_TipoCuentaBanco.class)
     @JsonbProperty("tipo_cuenta_banco")
-    public TipoCuentaBanco_Modelo tipoCuentaBanco;
+    public Entity_TipoCuentaBanco tipoCuentaBanco;
 
     @ManyToOne
     @JoinColumn(name = "id_banco")

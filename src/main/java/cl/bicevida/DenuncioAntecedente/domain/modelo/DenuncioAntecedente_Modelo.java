@@ -1,6 +1,6 @@
 package cl.bicevida.DenuncioAntecedente.domain.modelo;
 
-import cl.bicevida.Denuncio.domain.modelo.Denuncio_Modelo;
+import cl.bicevida.Denuncio.domain.modelo.Entity_Denucio;
 import cl.bicevida.TipoAntecedentes.domain.modelo.TipoAntecedentes_Modelo;
 import cl.bicevida.TipoEstadoAntecedentes.domain.modelo.TipoEstadoAntecedentes_Modelo;
 import jakarta.json.bind.annotation.JsonbProperty;
@@ -33,9 +33,9 @@ public class DenuncioAntecedente_Modelo {
     @ManyToOne
     @JoinColumn(name = "id_denuncio", referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "id_denuncio_FK"))
-    @Schema(required = false, implementation = Denuncio_Modelo.class)
+    @Schema(required = false, implementation = Entity_Denucio.class)
     @JsonbProperty("id_denuncio")
-    public Denuncio_Modelo denuncio;
+    public Entity_Denucio denuncio;
 
     @ManyToOne
     @JoinColumn(name = "id_tipo_antecedente", referencedColumnName = "id",

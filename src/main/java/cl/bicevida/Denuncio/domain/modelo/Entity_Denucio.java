@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Denuncio_Modelo {
+public class Entity_Denucio {
     @Id
     @Column(name = "id", nullable = false)
     @Schema(required = true, implementation = Long.class, example = "1")
