@@ -9,4 +9,5 @@ public class PanacheRepository_TipoPersona implements PanacheRepository<Entity_T
 
     public PanacheRepository_TipoPersona() {
     }
+
 }

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static cl.bicevida.Utils.Constants.INTERNAL_SERVER_ERROR;
 import static cl.bicevida.Utils.Constants.REGISTRO_ELIMINADO;
 
 
@@ -83,21 +84,31 @@ public class Rutas_Persona {
     }
 
     @POST
-    @Retry(maxRetries = 3, delay = 3000, abortOn = {NotFoundException.class,ProcessingException.class,ValidationException.class,BadRequestException.class})
+    @Retry(maxRetries = 3, delay = 3000, abortOn = {InternalServerErrorException.class, NotFoundException.class, ProcessingException.class, ValidationException.class, BadRequestException.class})
     @Fallback(fallbackMethod = "fallbackCrear")
     public Response crear(Request_Save_DTO_Persona dto) {
         log.info("[POST] - Se Realizo una llamada para crear una persona");
-        Set<ConstraintViolation<Request_Save_DTO_Persona>> violations = validator.validate(dto);
-        if (!violations.isEmpty()) {
-            List<String> errors = new ArrayList<>();
-            violations.forEach(x -> errors.add(x.getMessage()));
-            return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationErrorResponse(errors)).build();
-        }
-        try{
+        try {
+            Set<ConstraintViolation<Request_Save_DTO_Persona>> violations = validator.validate(dto);
+            if (!violations.isEmpty()) {
+                List<String> errors = new ArrayList<>();
+                violations.forEach(x -> errors.add(x.getMessage()));
+                return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationErrorResponse(errors)).build();
+            }
+
+            if(!dto.getEsRutChileno()){
+                dto.setDv("0");
+            }
+
             Controller_Crear_Persona controlador = new Controller_Crear_Persona(crear_PuertoSalida);
             return Response.status(Response.Status.OK).entity(controlador.crear(dto)).build();
-        } catch (BadRequestException | NotFoundException e){
+        } catch (BadRequestException | NotFoundException e) {
             return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        } catch (InternalServerErrorException e) {
+            return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new GeneralErrorResponse(INTERNAL_SERVER_ERROR)).build();
         }
     }
 
@@ -108,23 +119,32 @@ public class Rutas_Persona {
 
     @PUT
     @Path("/{id}")
-    @Retry(maxRetries = 3, delay = 3000, abortOn = {NotFoundException.class})
+    @Retry(maxRetries = 3, delay = 3000, abortOn = {InternalServerErrorException.class, NotFoundException.class, ProcessingException.class, ValidationException.class, BadRequestException.class})
     @Fallback(fallbackMethod = "fallbackActualizar")
     public Response actualizar(@PathParam("id") long id, Request_Update_DTO_Persona dto) {
-        Set<ConstraintViolation<Request_Update_DTO_Persona>> violations = validator.validate(dto);
-        if (!violations.isEmpty()) {
-            List<String> errors = new ArrayList<>();
-            violations.forEach(x -> errors.add(x.getMessage()));
-            return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationErrorResponse(errors)).build();
-        }
+        log.info("[PUT] - Se Realizo una llamada para modificar una persona");
 
         try {
+            Set<ConstraintViolation<Request_Update_DTO_Persona>> violations = validator.validate(dto);
+            if (!violations.isEmpty()) {
+                List<String> errors = new ArrayList<>();
+                violations.forEach(x -> errors.add(x.getMessage()));
+                return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationErrorResponse(errors)).build();
+            }
+            if(!dto.getEsRutChileno()){
+                dto.setDv("0");
+            }
+
             Controller_Actualizar_Persona controlador = new Controller_Actualizar_Persona(actualizar_PuertoSalida);
             return Response.status(Response.Status.OK).entity(controlador.actualizar(id, dto)).build();
-        } catch (NotFoundException e) {
+        } catch (BadRequestException | NotFoundException e) {
             return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        } catch (InternalServerErrorException e) {
+            return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new GeneralErrorResponse(INTERNAL_SERVER_ERROR)).build();
         }
-
     }
 
     public Response fallbackActualizar(long id, Request_Update_DTO_Persona dto) {
@@ -139,7 +159,7 @@ public class Rutas_Persona {
         try {
             Controller_Eliminar_Persona controlador = new Controller_Eliminar_Persona(eliminar_PuertoSalida);
             controlador.eliminarPorID(id);
-            return Response.status(Response.Status.OK).entity(new GeneralStringResponse(REGISTRO_ELIMINADO+id)).build();
+            return Response.status(Response.Status.OK).entity(new GeneralStringResponse(REGISTRO_ELIMINADO + id)).build();
         } catch (NotFoundException e) {
             return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
         }

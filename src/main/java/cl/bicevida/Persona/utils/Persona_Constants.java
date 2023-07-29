@@ -7,7 +7,7 @@ public class Persona_Constants {
 
     public static final String rutJson = "rut";
     public static final int rutMin = 6;
-    public static final int rutMax = 8;
+    public static final int rutMax = 30;
     public static final String rutSize = rutJson + DEBE_POSEER_MINIMO + rutMin + DEBE_POSEER_MAXIMO + rutMax;
 
     public static final String dvJson = "dv";
@@ -70,6 +70,6 @@ public class Persona_Constants {
     public static  final int direccionJsonMax = 250;
     public static  final String direccionJsonSizeMsg = direccionJson + DEBE_POSEER_MINIMO + direccionJsonMin + DEBE_POSEER_MAXIMO + direccionJsonMax;
 
-
+    public static final String esRutChilenoJson = "esRutChileno";
     public static final String emailODireccionRequeridos = "Debes enviar el email o la direccion para poder contactar a la persona";
 }

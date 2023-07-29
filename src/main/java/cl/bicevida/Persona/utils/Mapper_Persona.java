@@ -89,8 +89,7 @@ public class Mapper_Persona {
         return entity;
     }
 
-    public Entity_Persona crearEntityCamposMinimos(Request_Update_DTO_Persona dto, Entity_TipoPersona tipoPersona) {
-        Entity_Persona entity = new Entity_Persona();
+    public Entity_Persona crearEntityCamposMinimos(Request_Update_DTO_Persona dto, Entity_TipoPersona tipoPersona,Entity_Persona entity) {
         Entity_Persona actualizado = generarEntity(entity,
                 dto.getRut(),
                 dto.getDv(),

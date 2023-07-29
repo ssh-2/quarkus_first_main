@@ -19,18 +19,17 @@ import static cl.bicevida.Utils.Constants.*;
 public class Request_Save_DTO_Persona {
 
 
-
     @NotNull(message=rutJson + ES_REQUERIDO)
     @Size(min = rutMin,max = rutMax,message = rutSize)
-    @Pattern(regexp  = REGEX_SOLO_NUMEROS,message = rutJson + ERROR_FORMATO_SOLO_NUMEROS)
-    @Schema(required = true, implementation = String.class, example = "26000111")
+    @Pattern(regexp  = REGEX_LETRAS_Y_NUMEROS_Y_GUION,message = rutJson + ERROR_SOLO_LETRAS_NUMEROS_GUION)
+    @Schema(required = true, implementation = String.class, example = "Rut Chileno=26000111 o letras para documentos extranjeros")
     @JsonbProperty(rutJson)
     public String rut;
 
     @NotNull(message=dvJson + ES_REQUERIDO)
     @Size(max = dvMax,message = dvSize)
     @Pattern(regexp  = REGEX_SOLO_NUMEROS_K,message = dvJson + ERROR_FORMATO_SOLO_NUMEROS_K)
-    @Schema(required = true, implementation = String.class, example = "K")
+    @Schema(required = true, implementation = String.class, example = "K, si es esRutChileno no debe enviarse el parametro")
     @JsonbProperty(dvJson)
     public String dv;
 
@@ -100,5 +99,10 @@ public class Request_Save_DTO_Persona {
     @Schema(required = false, implementation = String.class, example = "1")
     @JsonbProperty(direccionJson)
     private String direccion;
+
+    @NotNull(message= esRutChilenoJson + ES_REQUERIDO)
+    @Schema(required = false, implementation = Boolean.class, example = "true")
+    @JsonbProperty(esRutChilenoJson)
+    private Boolean esRutChileno;
 
 }

@@ -2,7 +2,9 @@ package cl.bicevida.Utils;
 
 public class Constants {
 
-    public static String INTERNAL_SERVER_ERROR = "Servicio no disponible";
+
+    public static final String ERROR_SOLO_LETRAS_NUMEROS_GUION = "solo acepta letras, numeros y el guion (-)";
+    public static String INTERNAL_SERVER_ERROR = "Internal Server Error";
     public static String NOT_FOUND_BY_ID = "No se encontro data con el ID: ";
 
     public static String ERROR_CLASS = "ErrorClass: ";
@@ -18,6 +20,8 @@ public class Constants {
     public static String REGISTRO_ELIMINADO = "Se ha eliminado con éxito el registro con el ID: ";
 
     public final static String REGEX_SOLO_LETRAS_TRIM = "^(?!\\s)^[a-zA-Z ]{1,250}[^\\s]";
+
+    public final static String REGEX_LETRAS_Y_NUMEROS_Y_GUION = "^(?!\\s)^[a-zA-Z0-9\\- ]{1,250}[^\\s]";
 
     public final static String REGEX_SOLO_NUMEROS = "^(?!\\s)^[0-9]+$";
 

@@ -3,6 +3,7 @@ package cl.bicevida.Persona.domain.DTO;
 import cl.bicevida.TipoPersona.domain.DTO.Response_DTO_TipoPersona;
 import cl.bicevida.TipoPersona.domain.modelo.Entity_TipoPersona;
 import jakarta.json.bind.annotation.JsonbProperty;
+import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ import static cl.bicevida.Persona.utils.Persona_Constants.direccionJson;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonbPropertyOrder(value =  {"id","idPersonaLegacy", "rut","dv","nombresRazonSocial","apellido1","apellido2","sexo","email","direccion","fechaNacimiento","tipo_persona" })
 public class Response_DTO_Persona {
 
     @Schema(required = true, implementation = Long.class, example = "1")
@@ -60,11 +62,11 @@ public class Response_DTO_Persona {
     @JsonbProperty("fechaNacimiento")
     public LocalDate fechaNacimiento;
 
-    @Schema(required = false, implementation = String.class, example = "1")
+    @Schema(required = true, implementation = String.class, example = "1")
     @JsonbProperty("idPersonaLegacy")
     private String idPersonaLegacy;
 
-    @Schema(required = false, implementation = String.class, example = "1")
+    @Schema(required = true, implementation = String.class, example = "1")
     @JsonbProperty(direccionJson)
     private String direccion;
 }
