@@ -70,7 +70,6 @@ public class Request_Save_DTO_Persona {
     @JsonbProperty(usuarioCreacionJson)
     private String usuarioCreacion;
 
-    @NotNull(message= emailJson + ES_REQUERIDO)
     @Size(min = emailMin,max = emailMax,message = emailSize)
     @Pattern(regexp  = REGEX_EMAIL,message = emailJson + ERROR_FORMATO_EMAIL)
     @Schema(required = true, implementation = String.class, example = "elmakina@gmail.com")
@@ -92,7 +91,14 @@ public class Request_Save_DTO_Persona {
 
 
     @Pattern(regexp  = REGEX_SOLO_NUMEROS,message = tipo_personaJson + ERROR_FORMATO_SOLO_NUMEROS)
+    @Size(min = idPersonaLegacyJsonMin,max = idPersonaLegacyJsonMax,message = idPersonaLegacyJsonSizeMsg)
     @Schema(required = false, implementation = Long.class, example = "1")
     @JsonbProperty(idPersonaLegacyJson)
     private String idPersonaLegacy;
+
+    @Size(min = direccionJsonMin,max = direccionJsonMax,message = direccionJsonSizeMsg)
+    @Schema(required = false, implementation = String.class, example = "1")
+    @JsonbProperty(direccionJson)
+    private String direccion;
+
 }

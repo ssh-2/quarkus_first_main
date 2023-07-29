@@ -99,4 +99,9 @@ public class Entity_Persona  {
     @Schema(required = false, implementation = String.class, example = "1")
     @JsonbProperty("idPersonaLegacy")
     private String idPersonaLegacy;
+
+    @Column(name = "direccion")
+    @Schema(required = false, implementation = String.class, example = "1")
+    @JsonbProperty("direccion")
+    public String direccion;
 }

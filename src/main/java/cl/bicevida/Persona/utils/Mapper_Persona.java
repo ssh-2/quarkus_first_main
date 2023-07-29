@@ -7,7 +7,6 @@ import cl.bicevida.Persona.domain.modelo.Entity_Persona;
 import cl.bicevida.TipoPersona.domain.DTO.Response_DTO_TipoPersona;
 import cl.bicevida.TipoPersona.domain.modelo.Entity_TipoPersona;
 import jakarta.enterprise.context.ApplicationScoped;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
@@ -37,6 +36,7 @@ public class Mapper_Persona {
         dto.setEmail(entity.getEmail());
         dto.setTipo_persona(tipoPersona);
         dto.setIdPersonaLegacy(entity.getIdPersonaLegacy());
+        dto.setDireccion(entity.getDireccion());
         return dto;
     }
 
@@ -48,7 +48,7 @@ public class Mapper_Persona {
         return dtos;
     }
 
-    @SneakyThrows
+
     public Entity_Persona crearEntity(Request_Save_DTO_Persona dto, Entity_TipoPersona tipoPersona) {
         Entity_Persona entity = new Entity_Persona();
         Entity_Persona actualizado = generarEntity(entity,
@@ -59,12 +59,53 @@ public class Mapper_Persona {
                 dto.getApellido2(),
                 dto.getFechaNacimiento(),
                 dto.getSexo(),
-                dto.getEmail(),
+                getEmail(dto),
                 tipoPersona,
-                dto.getIdPersonaLegacy()
+                dto.getIdPersonaLegacy(),
+                getDireccion(dto)
         );
         actualizado.setUsuarioCreacion(dto.getUsuarioCreacion());
         actualizado.setFechaCreacion(LocalDateTime.now());
+        return entity;
+    }
+
+    public Entity_Persona crearEntityCamposMinimos(Request_Save_DTO_Persona dto, Entity_TipoPersona tipoPersona) {
+        Entity_Persona entity = new Entity_Persona();
+        Entity_Persona actualizado = generarEntity(entity,
+                dto.getRut(),
+                dto.getDv(),
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                tipoPersona,
+                dto.getIdPersonaLegacy(),
+                null
+        );
+        actualizado.setUsuarioCreacion(dto.getUsuarioCreacion());
+        actualizado.setFechaCreacion(LocalDateTime.now());
+        return entity;
+    }
+
+    public Entity_Persona crearEntityCamposMinimos(Request_Update_DTO_Persona dto, Entity_TipoPersona tipoPersona) {
+        Entity_Persona entity = new Entity_Persona();
+        Entity_Persona actualizado = generarEntity(entity,
+                dto.getRut(),
+                dto.getDv(),
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                tipoPersona,
+                dto.getIdPersonaLegacy(),
+                null
+        );
+        actualizado.setUsuarioActualizacion(dto.getUsuarioActualizacion());
+        actualizado.setFechaActualizacion(LocalDateTime.now());
         return entity;
     }
 
@@ -77,9 +118,10 @@ public class Mapper_Persona {
                 dto.getApellido2(),
                 dto.getFechaNacimiento(),
                 dto.getSexo(),
-                dto.getEmail(),
+                getEmail(dto),
                 tipoPersona,
-                dto.getIdPersonaLegacy()
+                dto.getIdPersonaLegacy(),
+                getDireccion(dto)
                 );
         actualizado.setUsuarioActualizacion(dto.getUsuarioActualizacion());
         actualizado.setFechaActualizacion(LocalDateTime.now());
@@ -96,19 +138,52 @@ public class Mapper_Persona {
                                          String sexo,
                                          String email,
                                          Entity_TipoPersona tipoPersona,
-                                         String IdPersonaLegacy
+                                         String IdPersonaLegacy,
+                                         String direccion
     ){
-        LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoString);
-        entity.setRut(rut.trim());
-        entity.setDv(dv.trim());
-        entity.setNombresRazonSocial(nombre.trim());
-        entity.setApellido1(apellido1.trim());
-        entity.setApellido2(apellido2.trim());
-        entity.setFechaNacimiento(fechaNacimiento);
-        entity.setSexo(sexo.trim());
-        entity.setEmail(email.trim());
+
+        if(fechaNacimientoString != null){
+            LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoString);
+            entity.setFechaNacimiento(fechaNacimiento);
+        }
+        entity.setRut(rut);
+        entity.setDv(dv);
+        entity.setNombresRazonSocial(nombre);
+        entity.setApellido1(apellido1);
+        entity.setApellido2(apellido2);
+        entity.setSexo(sexo);
+        entity.setEmail(email);
         entity.setTipo_persona(tipoPersona);
-        entity.setIdPersonaLegacy(IdPersonaLegacy.trim());
+        entity.setIdPersonaLegacy(IdPersonaLegacy);
+        entity.setDireccion(direccion);
         return entity;
+    }
+
+    protected String getEmail(Request_Save_DTO_Persona dto){
+        if(dto.getEmail()==null){
+            return null;
+        }
+        return dto.getEmail();
+    }
+
+    protected String getEmail(Request_Update_DTO_Persona dto){
+        if(dto.getEmail() == null){
+            return null;
+        }
+        return dto.getEmail();
+    }
+
+    protected String getDireccion(Request_Save_DTO_Persona dto){
+        if(dto.getDireccion()==null){
+            return null;
+        }
+        return dto.getDireccion();
+    }
+
+    protected String getDireccion(Request_Update_DTO_Persona dto){
+        if(dto.getDireccion() == null){
+            return null;
+        }
+        return dto.getDireccion();
     }
 }

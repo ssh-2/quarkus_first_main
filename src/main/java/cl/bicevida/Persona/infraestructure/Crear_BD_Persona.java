@@ -15,6 +15,7 @@ import jakarta.ws.rs.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.faulttolerance.Retry;
 
+import static cl.bicevida.Persona.utils.Persona_Constants.emailODireccionRequeridos;
 import static cl.bicevida.Utils.Constants.NOT_FOUND_BY_ID;
 import static cl.bicevida.Utils.Constants.RUT_INVALIDO;
 
@@ -43,7 +44,12 @@ public class Crear_BD_Persona implements PuertoSalida_Crear_Persona {
     public Response_DTO_Persona crear(Request_Save_DTO_Persona dto) {
         log.info("[POST] intentando crear una persona");
 
-        //Validamos El RUT
+        //Validamos que venga o el Email o la direccion
+        if(dto.getEmail() == null && dto.getDireccion() == null) {
+            throw new BadRequestException(emailODireccionRequeridos);
+        }
+
+        //Validamos q el RUT sea valido
         boolean isAValidRut = rutValidation.isAValidRut(dto.getRut(),dto.getDv());
         if(!isAValidRut){
             throw new BadRequestException(RUT_INVALIDO + "  [" + dto.getRut() + "-" + dto.getDv() + "]" );
@@ -56,13 +62,31 @@ public class Crear_BD_Persona implements PuertoSalida_Crear_Persona {
 
 
         //Creamos el entity desde el DTO
-        Entity_Persona entity = mapper.crearEntity(dto,tipoPersona);
+        Entity_Persona entity = crearEntityDesdeDTO(dto,tipoPersona);
 
         //Persistimos en la BD
         repositoryPersona.persist(entity);
 
         //Retornamos
         return mapper.crearDTO(entity);
+    }
+
+    protected Entity_Persona crearEntityDesdeDTO(Request_Save_DTO_Persona dto,Entity_TipoPersona tipoPersona){
+        if(dto.getIdPersonaLegacy() == null){
+            return crearEntityConTodosLosCampos(dto,tipoPersona);
+        }
+        return crearEntityConDatosMinimos(dto,tipoPersona);
+    }
+
+
+    protected Entity_Persona crearEntityConTodosLosCampos(Request_Save_DTO_Persona dto,Entity_TipoPersona tipoPersona){
+        log.info("Creando Persona con todos los campos....");
+        return mapper.crearEntity(dto,tipoPersona);
+    }
+
+    protected Entity_Persona crearEntityConDatosMinimos(Request_Save_DTO_Persona dto,Entity_TipoPersona tipoPersona){
+        log.info("Creando Persona con los campos minimos....");
+        return mapper.crearEntityCamposMinimos(dto,tipoPersona);
     }
 
 

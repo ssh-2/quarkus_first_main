@@ -12,6 +12,8 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import static cl.bicevida.Persona.utils.Persona_Constants.direccionJson;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -62,6 +64,9 @@ public class Response_DTO_Persona {
     @JsonbProperty("idPersonaLegacy")
     private String idPersonaLegacy;
 
+    @Schema(required = false, implementation = String.class, example = "1")
+    @JsonbProperty(direccionJson)
+    private String direccion;
 }
 
 
