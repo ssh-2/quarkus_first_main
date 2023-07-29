@@ -1,6 +1,6 @@
 package cl.bicevida.Estado.domain.modelo;
 
-import cl.bicevida.ProcesoEstado.domain.modelo.ProcesoEstado_Modelo;
+import cl.bicevida.ProcesoEstado.domain.modelo.Entity_ProcesoEstado;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,5 +38,5 @@ public class Estado_Modelo {
     @ManyToOne
     @JoinColumn(name = "id_proceso_estado", referencedColumnName = "id")
     @JsonbProperty("proceso_estado")
-    public ProcesoEstado_Modelo procesoEstado;
+    public Entity_ProcesoEstado procesoEstado;
 }
