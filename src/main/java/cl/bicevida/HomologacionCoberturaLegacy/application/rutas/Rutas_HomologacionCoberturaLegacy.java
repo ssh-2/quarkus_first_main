@@ -65,7 +65,7 @@ public class Rutas_HomologacionCoberturaLegacy {
     @Path("/{id}")
     @Retry(maxRetries = 3, delay = 3000, abortOn = {NotFoundException.class, InternalServerErrorException.class})
     @Fallback(fallbackMethod = "fallbackObtener")
-    public Response getById(@PathParam("id") long id) throws Exception {
+    public Response getById(@PathParam("id") Long id) throws Exception {
         try {
             Controller_BuscarPorID_HomologacionCoberturaLegacy controlador = new Controller_BuscarPorID_HomologacionCoberturaLegacy(buscarPorID_PuertoSalida);
             return Response.status(Response.Status.OK).entity(controlador.buscarPorID(id)).build();
@@ -74,7 +74,7 @@ public class Rutas_HomologacionCoberturaLegacy {
         }
     }
 
-    public Response fallbackObtener(long id) {
+    public Response fallbackObtener(Long id) {
         return Response.status(503).build();
     }
 
@@ -104,7 +104,7 @@ public class Rutas_HomologacionCoberturaLegacy {
     @Path("/{id}")
     @Retry(maxRetries = 3, delay = 3000, abortOn = {InternalServerErrorException.class, NotFoundException.class, ProcessingException.class, ValidationException.class, BadRequestException.class})
     @Fallback(fallbackMethod = "fallbackActualizar")
-    public Response actualizar(@PathParam("id") long id, Request_Update_DTO_HomologacionCoberturaLegacy dto) {
+    public Response actualizar(@PathParam("id") Long id, Request_Update_DTO_HomologacionCoberturaLegacy dto) {
         log.info("[PUT] - Se Realizo una llamada para modificar HomologacionCoberturaLegacy");
 
         try {
@@ -116,6 +116,7 @@ public class Rutas_HomologacionCoberturaLegacy {
             }
 
             Controller_Actualizar_HomologacionCoberturaLegacy controlador = new Controller_Actualizar_HomologacionCoberturaLegacy(actualizar_PuertoSalida);
+            log.info("NUEVO DTO: " + id + "\n" + dto.registroCMF);
             return Response.status(Response.Status.OK).entity(controlador.actualizar(id, dto)).build();
         } catch (BadRequestException | NotFoundException e) {
             return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
@@ -127,7 +128,7 @@ public class Rutas_HomologacionCoberturaLegacy {
         }
     }
 
-    public Response fallbackActualizar(long id, Request_Update_DTO_HomologacionCoberturaLegacy dto) {
+    public Response fallbackActualizar(Long id, Request_Update_DTO_HomologacionCoberturaLegacy dto) {
         return Response.status(503).build();
     }
 
@@ -135,7 +136,7 @@ public class Rutas_HomologacionCoberturaLegacy {
     @Path("/{id}")
     @Retry(maxRetries = 3, delay = 3000, abortOn = {NotFoundException.class})
     @Fallback(fallbackMethod = "fallbackEliminar")
-    public Response delete(@PathParam("id") long id) {
+    public Response delete(@PathParam("id") Long id) {
         try {
             Controller_Eliminar_HomologacionCoberturaLegacy controlador = new Controller_Eliminar_HomologacionCoberturaLegacy(eliminar_PuertoSalida);
             controlador.eliminarPorID(id);
@@ -145,10 +146,8 @@ public class Rutas_HomologacionCoberturaLegacy {
         }
     }
 
-    public Response fallbackEliminar(long id) {
+    public Response fallbackEliminar(Long id) {
         return Response.status(503).build();
     }
-
-
 
 }

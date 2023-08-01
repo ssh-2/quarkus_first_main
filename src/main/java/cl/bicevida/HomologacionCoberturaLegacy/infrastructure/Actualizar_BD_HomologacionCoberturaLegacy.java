@@ -6,8 +6,10 @@ import cl.bicevida.HomologacionCoberturaLegacy.domain.modelo.Entity_Homologacion
 import cl.bicevida.HomologacionCoberturaLegacy.domain.puertoSalida.PuertoSalida_Actualizar_HomologacionCoberturaLegacy;
 import cl.bicevida.HomologacionCoberturaLegacy.utils.Mapper_HomologacionCoberturaLegacy;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.microprofile.faulttolerance.Retry;
 
 import java.time.LocalDateTime;
 
@@ -27,10 +29,13 @@ public class Actualizar_BD_HomologacionCoberturaLegacy implements PuertoSalida_A
     }
 
     @Override
+    @Retry(maxRetries = 3, delay = 3000)
+    @Transactional
     public Response_DTO_HomologacionCoberturaLegacy actualizar(Long id, Request_Update_DTO_HomologacionCoberturaLegacy dto) {
         Entity_HomologacionCoberturaLegacy entity = repository.findByIdOptional(id)
                 .orElseThrow(()-> new NotFoundException(NOT_FOUND_BY_ID + id));
         entity.setRegistroCMF(dto.getRegistroCMF());
+        entity.setUsuarioActualizacion(dto.getUsuarioActualizacion());
         entity.setFechaActualizacion(LocalDateTime.now());
         repository.persist(entity);
         return mapper.crearDTO(entity);
