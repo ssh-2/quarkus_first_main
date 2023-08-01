@@ -35,19 +35,17 @@ public class Request_Save_DTO_Persona {
 
     @NotNull(message= nombresRazonSocialJson + ES_REQUERIDO)
     @Size(min = nombresRazonSocialMin,max = nombresRazonSocialMax,message = nombresRazonSocialSize)
-    @Pattern(regexp  = REGEX_SOLO_LETRAS_TRIM,message = nombresRazonSocialJson + ERROR_FORMATO_SOLO_LETRAS)
+    @Pattern(regexp  = REGEX_LETRAS_Y_NUMEROS_Y_GUION,message = nombresRazonSocialJson + ERROR_FORMATO_SOLO_LETRAS)
     @Schema(required = true, implementation = String.class, example = "Jhon")
     @JsonbProperty(nombresRazonSocialJson)
     public String nombresRazonSocial;
 
-    @NotNull(message= apellido1Json + ES_REQUERIDO)
     @Size(min = apellido1Min,max = apellido1Max,message = apellido1Size)
     @Pattern(regexp  = REGEX_SOLO_LETRAS_TRIM,message = apellido1Json + ERROR_FORMATO_SOLO_LETRAS)
     @Schema(required = true, implementation = String.class, example = "Doe")
     @JsonbProperty(apellido1Json)
     public String apellido1;
 
-    @NotNull(message= apellido2Json + ES_REQUERIDO)
     @Size(min = apellido2Min,max = apellido2Max,message = apellido2Size)
     @Pattern(regexp  = REGEX_SOLO_LETRAS_TRIM,message = apellido2Json + ERROR_FORMATO_SOLO_LETRAS)
     @Schema(required = true, implementation = String.class, example = "Polanzki")

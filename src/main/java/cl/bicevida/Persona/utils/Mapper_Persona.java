@@ -144,6 +144,8 @@ public class Mapper_Persona {
         if(fechaNacimientoString != null){
             LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoString);
             entity.setFechaNacimiento(fechaNacimiento);
+        }else{
+            entity.setFechaNacimiento(null);
         }
         entity.setRut(rut);
         entity.setDv(dv);
