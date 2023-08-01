@@ -1,4 +1,4 @@
-package cl.bicevida.Banco.domain.DTO;
+package cl.bicevida.HomologacionCoberturaLegacy.domain.DTO;
 
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.validation.constraints.NotNull;
@@ -14,29 +14,23 @@ import static cl.bicevida.Utils.Constants.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Request_Update_DTO_Banco {
+public class Request_Save_DTO_HomologacionCoberturaLegacy {
 
-    private final String nombreJson = "nombre";
-    private final int minNombre = 3;
-    private final int maxNombre = 250;
-    private final String sizeNombre = nombreJson + DEBE_POSEER_MINIMO + minNombre + DEBE_POSEER_MAXIMO + maxNombre;
-
-    private final String usuarioJson = "usuarioActualizacion";
+    private final String usuarioJson = "usuarioCreacion";
     private final int minUsuario = 3;
     private final int maxUsuario = 250;
     private final String sizeUsuario = usuarioJson + DEBE_POSEER_MINIMO + minUsuario + DEBE_POSEER_MAXIMO + maxUsuario;
 
-    @NotNull(message=nombreJson + ES_REQUERIDO)
-    @Size(min = minNombre,max = maxNombre,message = sizeNombre)
-    @Pattern(regexp  = REGEX_SOLO_LETRAS_TRIM,message = nombreJson + ERROR_FORMATO_SOLO_LETRAS)
-    @Schema(required = true, implementation = String.class, example = "Natural")
-    @JsonbProperty(nombreJson)
-    public String nombre;
+    @NotNull(message = "El campo 'registro_cmf'" + ES_REQUERIDO)
+    @Size(max = 50, message = "El campo 'registro_cmf' no debe superar los 50 caracteres")
+    @Pattern(regexp = REGEX_LETRAS_Y_NUMEROS_Y_GUION, message = ERROR_SOLO_LETRAS_NUMEROS_GUION)
+    @Schema(required = true, implementation = String.class, example = "Registro CMF")
+    @JsonbProperty("registroCmf")
+    public String registroCMF;
 
     @NotNull(message=usuarioJson + ES_REQUERIDO)
     @Size(min = minUsuario,max = maxUsuario,message = sizeUsuario)
     @Schema(required = true, implementation = String.class, example = "user123")
     @JsonbProperty(usuarioJson)
-    private String usuarioActualizacion;
-
+    private String usuarioCreacion;
 }
