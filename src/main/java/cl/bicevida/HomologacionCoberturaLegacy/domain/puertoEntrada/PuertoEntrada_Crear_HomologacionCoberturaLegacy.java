@@ -1,0 +1,9 @@
+package cl.bicevida.HomologacionCoberturaLegacy.domain.puertoEntrada;
+
+import cl.bicevida.HomologacionCoberturaLegacy.domain.DTO.Request_Save_DTO_HomologacionCoberturaLegacy;
+import cl.bicevida.HomologacionCoberturaLegacy.domain.DTO.Response_DTO_HomologacionCoberturaLegacy;
+
+public interface PuertoEntrada_Crear_HomologacionCoberturaLegacy {
+    public Response_DTO_HomologacionCoberturaLegacy crear(Request_Save_DTO_HomologacionCoberturaLegacy dto);
+
+}

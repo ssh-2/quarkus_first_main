@@ -1,7 +1,7 @@
 package cl.bicevida.Siniestro.domain.modelo;
 
 import cl.bicevida.Estado.domain.modelo.Estado_Modelo;
-import cl.bicevida.HomologacionCoberturaLegacy.domain.modelo.HomologacionCoberturaLegacy_Modelo;
+import cl.bicevida.HomologacionCoberturaLegacy.domain.modelo.Entity_HomologacionCoberturaLegacy;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,9 +30,9 @@ public class Siniestro_Modelo {
 
     @ManyToOne
     @JoinColumn(name = "id_homologacion_cobertura")
-    @Schema(required = true, implementation = HomologacionCoberturaLegacy_Modelo.class)
+    @Schema(required = true, implementation = Entity_HomologacionCoberturaLegacy.class)
     @JsonbProperty("homologacion_cobertura")
-    public HomologacionCoberturaLegacy_Modelo homologacionCobertura;
+    public Entity_HomologacionCoberturaLegacy homologacionCobertura;
 
     @Column(name = "numero_poliza")
     @Schema(required = false, implementation = String.class, example = "12345")
