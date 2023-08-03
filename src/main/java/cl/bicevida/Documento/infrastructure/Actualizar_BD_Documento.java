@@ -28,7 +28,6 @@ public class Actualizar_BD_Documento implements PuertoSalida_Actualizar_Document
 
     private final Mapper_Documento mapper;
 
-
     public Actualizar_BD_Documento(PanacheRepository_Documento repository, PanacheRepository_Denucio repositoryDenucio, Mapper_Documento mapper) {
         this.repository = repository;
         this.repositoryDenucio = repositoryDenucio;
@@ -40,16 +39,27 @@ public class Actualizar_BD_Documento implements PuertoSalida_Actualizar_Document
     @Transactional
     public Response_DTO_Documento actualizar(Long id, Request_Update_DTO_Documento dto) {
         log.info("[PUT] intentando modificar un documento con id: " + id);
-        Long idDenucio = 1L;
-        Entity_Denucio entityDenucio = repositoryDenucio.findByIdOptional(idDenucio)
-                .orElseThrow(() -> new NotFoundException("En la tabla Denucio " + NOT_FOUND_BY_ID + idDenucio));
+        try {
+            Long idDenucio = 1L;
+            Entity_Denucio entityDenucio = repositoryDenucio.findByIdOptional(idDenucio)
+                    .orElseThrow(() -> new NotFoundException("En la tabla Denucio " + NOT_FOUND_BY_ID + idDenucio));
 
-        Entity_Documento entity = repository.findByIdOptional(id)
-                .orElseThrow(() -> new NotFoundException("En la tabla Documento " + NOT_FOUND_BY_ID + id));
+            Entity_Documento entity = repository.findByIdOptional(id)
+                    .orElseThrow(() -> new NotFoundException("En la tabla Documento " + NOT_FOUND_BY_ID + id));
 
-        Entity_Documento documentoModificado = mapper.crearEntity(dto, entity, entityDenucio);
-        repository.persist(documentoModificado);
+            Entity_Documento documentoModificado = mapper.crearEntity(dto, entity, entityDenucio);
+            repository.persist(documentoModificado);
 
-        return mapper.crearDTO(documentoModificado);
+            return mapper.crearDTO(documentoModificado);
+        } catch (BadRequestException e) {
+            log.error(e.getMessage());
+            throw new BadRequestException(e.getMessage());
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            throw new NotFoundException(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new InternalServerErrorException("Error al actualziar un Documento: " + e.getMessage());
+        }
     }
 }
