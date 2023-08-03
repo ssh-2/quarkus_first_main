@@ -5,7 +5,7 @@ import static cl.bicevida.Utils.Constants.DEBE_POSEER_MINIMO;
 
 public class Documento_Constants {
 
-    public static final String descripcionJson = "descipcion";
+    public static final String descripcionJson = "descripcion";
     public static final int minLongitudDescripcion = 10;
     public static final int maxLongitudDescripcion = 250;
     public static final String descripcionSize = descripcionJson + DEBE_POSEER_MINIMO + minLongitudDescripcion + DEBE_POSEER_MAXIMO + maxLongitudDescripcion;
