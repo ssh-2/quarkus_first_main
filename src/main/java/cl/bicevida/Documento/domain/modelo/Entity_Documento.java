@@ -3,6 +3,8 @@ package cl.bicevida.Documento.domain.modelo;
 import cl.bicevida.Denuncio.domain.modelo.Entity_Denucio;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import lombok.Data;
 
@@ -10,8 +12,14 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "documentos")
 @Data
+@Schema(
+        description = "(Descripción del esquema de datos) payload Documento",
+        name = "Documento (nombre del esquema)"
+)
 public class Entity_Documento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
