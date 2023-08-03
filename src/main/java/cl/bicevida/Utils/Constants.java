@@ -45,7 +45,12 @@ public class Constants {
 
     public final static String ES_REQUERIDO = " es requerido";
 
+    public final static String DATA_NO_ENCONTRADA ="No se encontro ningun registro con esos datos";
+
     public final static String RUT_INVALIDO = " El Rut y el DV no corresponden";
 
     public final static String ERROR_FORMATO_SOLO_LETRAS = " solo acepta letras y no acepta espacios al comienzo o al final";
+
+    public final static int DEFAULT_PAGINA_ACTUAL = 0;
+    public final static int DEFAULT_CANTIDAD_ELEMENTOS = 5;
 }

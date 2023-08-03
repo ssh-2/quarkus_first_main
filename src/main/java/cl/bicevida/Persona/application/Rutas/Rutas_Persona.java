@@ -1,6 +1,7 @@
 package cl.bicevida.Persona.application.Rutas;
 
 import cl.bicevida.Persona.application.Controllers.*;
+import cl.bicevida.Persona.domain.DTO.Request_Paginado_DTO_Persona;
 import cl.bicevida.Persona.domain.DTO.Request_Save_DTO_Persona;
 import cl.bicevida.Persona.domain.DTO.Request_Update_DTO_Persona;
 import cl.bicevida.Persona.domain.puertoSalida.*;
@@ -51,6 +52,9 @@ public class Rutas_Persona {
     PuertoSalida_Actualizar_Persona actualizar_PuertoSalida;
     @Inject
     PuertoSalida_Eliminar_Persona eliminar_PuertoSalida;
+
+    @Inject
+    PuertoSalida_Paginado_Persona paginado_PuertoSalida;
 
     @GET
     @Operation(summary = "Listado con todos los registros en la tabla", description = "Devuelve lista con todos los registros en la tabla, excepto campos con valor nulo")
@@ -169,5 +173,28 @@ public class Rutas_Persona {
         return Response.status(503).build();
     }
 
+
+    @POST
+    @Path("/paginado")
+    @Retry(maxRetries = 3, delay = 3000, abortOn = {InternalServerErrorException.class, NotFoundException.class, ProcessingException.class, ValidationException.class, BadRequestException.class})
+    @Fallback(fallbackMethod = "fallbackPaginado")
+    public Response paginado(Request_Paginado_DTO_Persona dto) {
+        log.info("[POST] - Buscando Paginado");
+        try {
+            Controller_Paginado_Persona controlador = new Controller_Paginado_Persona(paginado_PuertoSalida);
+            return Response.status(Response.Status.OK).entity(controlador.buscarPaginado(dto)).build();
+        } catch (BadRequestException | NotFoundException e) {
+            return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        } catch (InternalServerErrorException e) {
+            return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new GeneralErrorResponse(INTERNAL_SERVER_ERROR)).build();
+        }
+    }
+
+    public Response fallbackPaginado(Request_Paginado_DTO_Persona dto) {
+        return Response.status(503).build();
+    }
 
 }
