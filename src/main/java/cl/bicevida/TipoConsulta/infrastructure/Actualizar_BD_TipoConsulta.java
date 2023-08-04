@@ -8,6 +8,8 @@ import cl.bicevida.TipoConsulta.utils.Mapper_TipoConsulta;
 import cl.bicevida.TipoDenuncio.domain.DTO.Request_Update_DTO_TipoDenucio;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.InternalServerErrorException;
 import jakarta.ws.rs.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.faulttolerance.Retry;
@@ -33,12 +35,24 @@ public class Actualizar_BD_TipoConsulta implements PuertoSalida_Actualizar_TipoC
     @Retry(maxRetries = 3, delay = 3000)
     @Transactional
     public Response_DTO_TipoConsulta actualizar(Long id, Request_Update_DTO_TipoConsulta dto) {
-        Entity_TipoConsulta entity = repository.findByIdOptional(id)
-                .orElseThrow(() -> new NotFoundException(NOT_FOUND_BY_ID + id));
-        entity.setNombre(dto.getNombre().trim());
-        entity.setUsuarioActualizacion(dto.getUsuarioActualizacion().trim());
-        entity.setFechaActualizacion(LocalDateTime.now());
-        repository.persist(entity);
-        return mapper.crearDTO(entity);
+        try {
+            Entity_TipoConsulta entity = repository.findByIdOptional(id)
+                    .orElseThrow(() -> new NotFoundException(NOT_FOUND_BY_ID + id));
+            entity.setNombre(dto.getNombre().trim());
+            entity.setUsuarioActualizacion(dto.getUsuarioActualizacion().trim());
+            entity.setFechaActualizacion(LocalDateTime.now());
+            repository.persist(entity);
+            return mapper.crearDTO(entity);
+        } catch (BadRequestException e) {
+            log.error(e.getMessage());
+            throw new BadRequestException(e.getMessage());
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            throw new NotFoundException(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new InternalServerErrorException("Error al actualizar tipo consulta: " + e.getMessage());
+        }
+
     }
 }

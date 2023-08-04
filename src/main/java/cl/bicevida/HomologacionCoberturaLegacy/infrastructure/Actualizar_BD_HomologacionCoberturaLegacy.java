@@ -7,6 +7,8 @@ import cl.bicevida.HomologacionCoberturaLegacy.domain.puertoSalida.PuertoSalida_
 import cl.bicevida.HomologacionCoberturaLegacy.utils.Mapper_HomologacionCoberturaLegacy;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.InternalServerErrorException;
 import jakarta.ws.rs.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.faulttolerance.Retry;
@@ -32,12 +34,24 @@ public class Actualizar_BD_HomologacionCoberturaLegacy implements PuertoSalida_A
     @Retry(maxRetries = 3, delay = 3000)
     @Transactional
     public Response_DTO_HomologacionCoberturaLegacy actualizar(Long id, Request_Update_DTO_HomologacionCoberturaLegacy dto) {
-        Entity_HomologacionCoberturaLegacy entity = repository.findByIdOptional(id)
-                .orElseThrow(()-> new NotFoundException(NOT_FOUND_BY_ID + id));
-        entity.setRegistroCMF(dto.getRegistroCMF());
-        entity.setUsuarioActualizacion(dto.getUsuarioActualizacion());
-        entity.setFechaActualizacion(LocalDateTime.now());
-        repository.persist(entity);
-        return mapper.crearDTO(entity);
+        try {
+            Entity_HomologacionCoberturaLegacy entity = repository.findByIdOptional(id)
+                    .orElseThrow(() -> new NotFoundException(NOT_FOUND_BY_ID + id));
+            entity.setRegistroCMF(dto.getRegistroCMF());
+            entity.setUsuarioActualizacion(dto.getUsuarioActualizacion());
+            entity.setFechaActualizacion(LocalDateTime.now());
+            repository.persist(entity);
+            return mapper.crearDTO(entity);
+        } catch (BadRequestException e) {
+            log.error(e.getMessage());
+            throw new BadRequestException(e.getMessage());
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            throw new NotFoundException(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new InternalServerErrorException("Error al actualizar Homologacion Cobertura Legacy: " + e.getMessage());
+        }
+
     }
 }

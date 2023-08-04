@@ -7,9 +7,14 @@ import cl.bicevida.HomologacionCoberturaLegacy.domain.puertoSalida.PuertoSalida_
 import cl.bicevida.HomologacionCoberturaLegacy.utils.Mapper_HomologacionCoberturaLegacy;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.InternalServerErrorException;
+import jakarta.ws.rs.NotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.faulttolerance.Retry;
 
 @ApplicationScoped
+@Slf4j
 public class Crear_BD_HomolacionCoberturaLegacy implements PuertoSalida_Crear_HomologacionCoberturaLegacy {
 
     private final PanacheRepository_HomologacionCoberturaLegacy repository;
@@ -25,8 +30,20 @@ public class Crear_BD_HomolacionCoberturaLegacy implements PuertoSalida_Crear_Ho
     @Retry(maxRetries = 3, delay = 3000)
     @Override
     public Response_DTO_HomologacionCoberturaLegacy crear(Request_Save_DTO_HomologacionCoberturaLegacy dto) {
-        Entity_HomologacionCoberturaLegacy entity = mapper.creatEntity(dto);
-        repository.persist(entity);
-        return mapper.crearDTO(entity);
+        try {
+            Entity_HomologacionCoberturaLegacy entity = mapper.creatEntity(dto);
+            repository.persist(entity);
+            return mapper.crearDTO(entity);
+        } catch (BadRequestException e) {
+            log.error(e.getMessage());
+            throw new BadRequestException(e.getMessage());
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            throw new NotFoundException(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new InternalServerErrorException("Error al crear Homologacion Cobertura Legacy: " + e.getMessage());
+        }
+
     }
 }
