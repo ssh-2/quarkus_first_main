@@ -6,6 +6,8 @@ import cl.bicevida.TipoCuentaBanco.domain.modelo.Entity_TipoCuentaBanco;
 import cl.bicevida.TipoCuentaBanco.domain.puertoSalida.PuertoSalida_Actualizar_TipoCuentaBanco;
 import cl.bicevida.TipoCuentaBanco.utils.Mapper_TipoCuentaBanco;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.InternalServerErrorException;
 import jakarta.ws.rs.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,12 +30,24 @@ public class Actualizar_BD_TipoCuentaBanco implements PuertoSalida_Actualizar_Ti
 
     @Override
     public Response_DTO_TipoCuentaBanco actualizar(Long id, Request_Update_DTO_TipoCuentaBanco dto) {
-        Entity_TipoCuentaBanco entity = repository.findByIdOptional(id)
-                .orElseThrow(()-> new NotFoundException(NOT_FOUND_BY_ID+id));
-        entity.setNombre(dto.getNombre().trim());
-        entity.setUsuarioActualizacion(dto.getUsuarioActualizacion().trim());
-        entity.setFechaActualizacion(LocalDateTime.now());
-        repository.persist(entity);
-        return mapper.crearDTO(entity);
+        try {
+            Entity_TipoCuentaBanco entity = repository.findByIdOptional(id)
+                    .orElseThrow(() -> new NotFoundException(NOT_FOUND_BY_ID + id));
+            entity.setNombre(dto.getNombre().trim());
+            entity.setUsuarioActualizacion(dto.getUsuarioActualizacion().trim());
+            entity.setFechaActualizacion(LocalDateTime.now());
+            repository.persist(entity);
+            return mapper.crearDTO(entity);
+        } catch (BadRequestException e) {
+            log.error(e.getMessage());
+            throw new BadRequestException(e.getMessage());
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            throw new NotFoundException(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new InternalServerErrorException("Error al actualizar tipo cuenta banco: " + e.getMessage());
+        }
+
     }
 }

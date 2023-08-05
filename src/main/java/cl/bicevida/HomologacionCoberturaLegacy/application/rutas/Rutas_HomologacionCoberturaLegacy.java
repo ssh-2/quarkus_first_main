@@ -1,13 +1,11 @@
 package cl.bicevida.HomologacionCoberturaLegacy.application.rutas;
 
-import cl.bicevida.HomologacionCoberturaLegacy.application.controladores.Controller_BuscarPorID_HomologacionCoberturaLegacy;
-import cl.bicevida.HomologacionCoberturaLegacy.application.controladores.Controller_BuscarTodos_HomologacionCoberturaLegacy;
-import cl.bicevida.HomologacionCoberturaLegacy.application.controladores.Controller_Crear_HomologacionCoberturaLegacy;
+import cl.bicevida.HomologacionCoberturaLegacy.application.controladores.*;
 import cl.bicevida.HomologacionCoberturaLegacy.domain.DTO.Request_Save_DTO_HomologacionCoberturaLegacy;
-import cl.bicevida.HomologacionCoberturaLegacy.domain.puertoSalida.PuertoSalida_BuscarPorID_HomologacionCoberturaLegacy;
-import cl.bicevida.HomologacionCoberturaLegacy.domain.puertoSalida.PuertoSalida_BuscarTodos_HomologacionCoberturaLegacy;
-import cl.bicevida.HomologacionCoberturaLegacy.domain.puertoSalida.PuertoSalida_Crear_HomologacionCoberturaLegacy;
+import cl.bicevida.HomologacionCoberturaLegacy.domain.DTO.Request_Update_DTO_HomologacionCoberturaLegacy;
+import cl.bicevida.HomologacionCoberturaLegacy.domain.puertoSalida.*;
 import cl.bicevida.Utils.GeneralErrorResponse;
+import cl.bicevida.Utils.GeneralStringResponse;
 import cl.bicevida.Utils.ValidationErrorResponse;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -16,6 +14,7 @@ import jakarta.validation.ValidationException;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Retry;
 
@@ -28,10 +27,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static cl.bicevida.Utils.Constants.INTERNAL_SERVER_ERROR;
+import static cl.bicevida.Utils.Constants.REGISTRO_ELIMINADO;
+
 @Path("/api/homologacion-cobertura-legacy")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Transactional(Transactional.TxType.SUPPORTS)
+@Slf4j
 public class Rutas_HomologacionCoberturaLegacy {
 
     @Inject
@@ -43,6 +46,10 @@ public class Rutas_HomologacionCoberturaLegacy {
     PuertoSalida_BuscarPorID_HomologacionCoberturaLegacy buscarPorID_PuertoSalida;
     @Inject
     PuertoSalida_Crear_HomologacionCoberturaLegacy crear_PuertoSalida;
+    @Inject
+    PuertoSalida_Actualizar_HomologacionCoberturaLegacy actualizar_PuertoSalida;
+    @Inject
+    PuertoSalida_Eliminar_HomologacionCoberturaLegacy eliminar_PuertoSalida;
 
     @GET
     @Operation(summary = "Listado con todos los registros en la tabla", description = "Devuelve lista con todos los registros en la tabla, excepto campos con valor nulo")
@@ -58,7 +65,7 @@ public class Rutas_HomologacionCoberturaLegacy {
     @Path("/{id}")
     @Retry(maxRetries = 3, delay = 3000, abortOn = {NotFoundException.class, InternalServerErrorException.class})
     @Fallback(fallbackMethod = "fallbackObtener")
-    public Response getById(@PathParam("id") long id) throws Exception {
+    public Response getById(@PathParam("id") Long id) throws Exception {
         try {
             Controller_BuscarPorID_HomologacionCoberturaLegacy controlador = new Controller_BuscarPorID_HomologacionCoberturaLegacy(buscarPorID_PuertoSalida);
             return Response.status(Response.Status.OK).entity(controlador.buscarPorID(id)).build();
@@ -67,7 +74,7 @@ public class Rutas_HomologacionCoberturaLegacy {
         }
     }
 
-    public Response fallbackObtener(long id) {
+    public Response fallbackObtener(Long id) {
         return Response.status(503).build();
     }
 
@@ -92,4 +99,55 @@ public class Rutas_HomologacionCoberturaLegacy {
     public Response fallbackCrear(Request_Save_DTO_HomologacionCoberturaLegacy dto) {
         return Response.status(503).build();
     }
+
+    @PUT
+    @Path("/{id}")
+    @Retry(maxRetries = 3, delay = 3000, abortOn = {InternalServerErrorException.class, NotFoundException.class, ProcessingException.class, ValidationException.class, BadRequestException.class})
+    @Fallback(fallbackMethod = "fallbackActualizar")
+    public Response actualizar(@PathParam("id") Long id, Request_Update_DTO_HomologacionCoberturaLegacy dto) {
+        log.info("[PUT] - Se Realizo una llamada para modificar HomologacionCoberturaLegacy");
+
+        try {
+            Set<ConstraintViolation<Request_Update_DTO_HomologacionCoberturaLegacy>> violations = validator.validate(dto);
+            if (!violations.isEmpty()) {
+                List<String> errors = new ArrayList<>();
+                violations.forEach(x -> errors.add(x.getMessage()));
+                return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationErrorResponse(errors)).build();
+            }
+
+            Controller_Actualizar_HomologacionCoberturaLegacy controlador = new Controller_Actualizar_HomologacionCoberturaLegacy(actualizar_PuertoSalida);
+            log.info("NUEVO DTO: " + id + "\n" + dto.registroCMF);
+            return Response.status(Response.Status.OK).entity(controlador.actualizar(id, dto)).build();
+        } catch (BadRequestException | NotFoundException e) {
+            return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        } catch (InternalServerErrorException e) {
+            return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new GeneralErrorResponse(INTERNAL_SERVER_ERROR)).build();
+        }
+    }
+
+    public Response fallbackActualizar(Long id, Request_Update_DTO_HomologacionCoberturaLegacy dto) {
+        return Response.status(503).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Retry(maxRetries = 3, delay = 3000, abortOn = {NotFoundException.class})
+    @Fallback(fallbackMethod = "fallbackEliminar")
+    public Response delete(@PathParam("id") Long id) {
+        try {
+            Controller_Eliminar_HomologacionCoberturaLegacy controlador = new Controller_Eliminar_HomologacionCoberturaLegacy(eliminar_PuertoSalida);
+            controlador.eliminarPorID(id);
+            return Response.status(Response.Status.OK).entity(new GeneralStringResponse(REGISTRO_ELIMINADO + id)).build();
+        } catch (NotFoundException e) {
+            return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        }
+    }
+
+    public Response fallbackEliminar(Long id) {
+        return Response.status(503).build();
+    }
+
 }

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static cl.bicevida.Utils.Constants.INTERNAL_SERVER_ERROR;
 import static cl.bicevida.Utils.Constants.REGISTRO_ELIMINADO;
 
 @Path("/api/canal")
@@ -48,7 +49,7 @@ public class Rutas_Canal {
 
     @GET
     @APIResponses(
-            value = { @APIResponse(responseCode = "200", description = "OK"),
+            value = {@APIResponse(responseCode = "200", description = "OK"),
                     @APIResponse(responseCode = "400", description = "No encontrado")}
     )
     @Retry(maxRetries = 3, delay = 3000)
@@ -57,6 +58,7 @@ public class Rutas_Canal {
         Controller_BuscarTodos_Canal controlador = new Controller_BuscarTodos_Canal(buscarTodos_PuertoSalida);
         return Response.status(Response.Status.OK).entity(controlador.buscarTodos()).build();
     }
+
     public Response fallbackTodos() {
         return Response.status(503).build();
     }
@@ -79,17 +81,26 @@ public class Rutas_Canal {
     }
 
     @POST
-    @Retry(maxRetries = 3, delay = 3000, abortOn = {ValidationException.class}  )
+    @Retry(maxRetries = 3, delay = 3000, abortOn = {ValidationException.class})
     @Fallback(fallbackMethod = "fallbackCrearCanal")
     public Response crear(Request_Save_DTO_Canal dto) {
-        Set<ConstraintViolation<Request_Save_DTO_Canal>> violations = validator.validate(dto);
-        if(!violations.isEmpty()) {
-            List<String> error = new ArrayList<>();
-            violations.forEach((x -> error.add(x.getMessage())));
-            return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationErrorResponse(error)).build();
+        try {
+            Set<ConstraintViolation<Request_Save_DTO_Canal>> violations = validator.validate(dto);
+            if (!violations.isEmpty()) {
+                List<String> error = new ArrayList<>();
+                violations.forEach((x -> error.add(x.getMessage())));
+                return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationErrorResponse(error)).build();
+            }
+            Controller_Crear_Canal controlador = new Controller_Crear_Canal(crear_PuertoSalida);
+            return Response.status(Response.Status.OK).entity(controlador.crear(dto)).build();
+        } catch (BadRequestException | NotFoundException e) {
+            return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        } catch (org.jboss.resteasy.spi.InternalServerErrorException e) {
+            return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new GeneralErrorResponse(INTERNAL_SERVER_ERROR)).build();
         }
-        Controller_Crear_Canal controlador = new Controller_Crear_Canal(crear_PuertoSalida);
-        return Response.status(Response.Status.OK).entity(controlador.crear(dto)).build();
     }
 
     public Response fallbackCrearCanal(Request_Save_DTO_Canal dto) {
@@ -101,30 +112,34 @@ public class Rutas_Canal {
     @Retry(maxRetries = 3, delay = 3000, abortOn = {NotFoundException.class})
     @Fallback(fallbackMethod = "fallbackActualizarCanal")
     public Response actualizar(@PathParam("id") Long id, Request_Update_DTO_Canal dto) {
-        Set<ConstraintViolation<Request_Update_DTO_Canal>> violations = validator.validate(dto);
-        if(!violations.isEmpty()) {
-            List<String> errors = new ArrayList<>();
-            violations.forEach(x -> errors.add(x.getMessage()));
-            return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationErrorResponse(errors)).build();
-        }
-
         try {
+            Set<ConstraintViolation<Request_Update_DTO_Canal>> violations = validator.validate(dto);
+            if (!violations.isEmpty()) {
+                List<String> errors = new ArrayList<>();
+                violations.forEach(x -> errors.add(x.getMessage()));
+                return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationErrorResponse(errors)).build();
+            }
             Controller_Actualizar_Canal controlador = new Controller_Actualizar_Canal(actualizarCanalPuertoSalida);
             return Response.status(Response.Status.OK).entity(controlador.actualizar(id, dto)).build();
-        } catch (NotFoundException e) {
+        } catch (BadRequestException | NotFoundException e) {
             return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        } catch (org.jboss.resteasy.spi.InternalServerErrorException e) {
+            return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new GeneralErrorResponse(INTERNAL_SERVER_ERROR)).build();
         }
     }
 
     public Response fallbackActualizarCanal(Long id, Request_Update_DTO_Canal dto) {
-        return  Response.status(503).build();
+        return Response.status(503).build();
     }
 
     @DELETE
     @Path("/{id}")
     @Retry(maxRetries = 3, delay = 3000, abortOn = {NotFoundException.class})
     @Fallback(fallbackMethod = "fallbackElimninarCanal")
-    public Response eliminarCanal(@PathParam("id")Long id) {
+    public Response eliminarCanal(@PathParam("id") Long id) {
         try {
             Controller_Eliminar_Canal controlador = new Controller_Eliminar_Canal(eliminar_PuertoSalida);
             controlador.eliminarPorID(id);

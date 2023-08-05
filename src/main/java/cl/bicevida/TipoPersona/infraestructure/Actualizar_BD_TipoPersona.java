@@ -7,6 +7,8 @@ import cl.bicevida.TipoPersona.domain.puertoSalida.PuertoSalida_Actualizar_TipoP
 import cl.bicevida.TipoPersona.utils.Mapper_TipoPersona;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.InternalServerErrorException;
 import jakarta.ws.rs.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.faulttolerance.Retry;
@@ -32,12 +34,24 @@ public class Actualizar_BD_TipoPersona implements PuertoSalida_Actualizar_TipoPe
     @Retry(maxRetries = 3, delay = 3000)
     @Transactional
     public Response_DTO_TipoPersona actualizar(Long id, Request_Update_DTO_TipoPersona dto) {
-        Entity_TipoPersona entity = repository.findByIdOptional(id)
-                .orElseThrow(()-> new NotFoundException(NOT_FOUND_BY_ID+id));
-        entity.setNombre(dto.getNombre().trim());
-        entity.setUsuarioActualizacion(dto.getUsuarioActualizacion().trim());
-        entity.setFechaActualizacion(LocalDateTime.now());
-        repository.persist(entity);
-        return mapper.crearDTO(entity);
+        try {
+            Entity_TipoPersona entity = repository.findByIdOptional(id)
+                    .orElseThrow(() -> new NotFoundException(NOT_FOUND_BY_ID + id));
+            entity.setNombre(dto.getNombre().trim());
+            entity.setUsuarioActualizacion(dto.getUsuarioActualizacion().trim());
+            entity.setFechaActualizacion(LocalDateTime.now());
+            repository.persist(entity);
+            return mapper.crearDTO(entity);
+        } catch (BadRequestException e) {
+            log.error(e.getMessage());
+            throw new BadRequestException(e.getMessage());
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            throw new NotFoundException(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new InternalServerErrorException("Error al actualizar tipo persona: " + e.getMessage());
+        }
+
     }
 }

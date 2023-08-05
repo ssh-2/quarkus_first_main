@@ -1,6 +1,11 @@
 package cl.bicevida.Documento.domain.DTO;
 
+import cl.bicevida.Denuncio.domain.modelo.Entity_Denucio;
 import jakarta.json.bind.annotation.JsonbProperty;
+import jakarta.persistence.Column;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -16,29 +21,18 @@ import static cl.bicevida.Utils.Constants.*;
 @NoArgsConstructor
 public class Response_DTO_Documento {
 
-    private final String nombreJson = "nombre";
-    private final int minNombre = 3;
-    private final int maxNombre = 250;
-    private final String sizeNombre = nombreJson + DEBE_POSEER_MINIMO + minNombre + DEBE_POSEER_MAXIMO + maxNombre;
+    @Schema(required = true, implementation = Long.class, example = "1")
+    @JsonbProperty("id")
+    public Long id;
 
-    private final String usuarioJson = "usuarioCreacion";
-    private final int minUsuario = 3;
-    private final int maxUsuario = 250;
-    private final String sizeUsuario = usuarioJson + DEBE_POSEER_MINIMO + minUsuario + DEBE_POSEER_MAXIMO + maxUsuario;
+    @JsonbProperty("denuncio")
+    public Entity_Denucio denuncio;
 
+    @Schema(required = false, implementation = String.class)
+    @JsonbProperty("descripcion")
+    public String descripcion;
 
-    @NotNull(message=nombreJson + ES_REQUERIDO)
-    @Size(min = minNombre,max = maxNombre,message = sizeNombre)
-    @Pattern(regexp  = REGEX_SOLO_LETRAS_TRIM,message = nombreJson + ERROR_FORMATO_SOLO_LETRAS)
-    @Schema(required = true, implementation = String.class, example = "Natural")
-    @JsonbProperty(nombreJson)
-    public String nombre;
-
-    @NotNull(message=usuarioJson + ES_REQUERIDO)
-    @Size(min = minUsuario,max = maxUsuario,message = sizeUsuario)
-    @Schema(required = true, implementation = String.class, example = "user123")
-    @JsonbProperty(usuarioJson)
-    private String usuarioCreacion;
-
-
+    @Schema(required = false, implementation = String.class)
+    @JsonbProperty("path")
+    public String path;
 }

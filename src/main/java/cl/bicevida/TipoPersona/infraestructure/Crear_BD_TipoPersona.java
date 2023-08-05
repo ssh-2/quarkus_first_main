@@ -7,9 +7,14 @@ import cl.bicevida.TipoPersona.domain.puertoSalida.PuertoSalida_Crear_TipoPerson
 import cl.bicevida.TipoPersona.utils.Mapper_TipoPersona;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.InternalServerErrorException;
+import jakarta.ws.rs.NotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.faulttolerance.Retry;
 
 @ApplicationScoped
+@Slf4j
 public class Crear_BD_TipoPersona implements PuertoSalida_Crear_TipoPersona {
 
     private final PanacheRepository_TipoPersona repository;
@@ -25,10 +30,20 @@ public class Crear_BD_TipoPersona implements PuertoSalida_Crear_TipoPersona {
     @Retry(maxRetries = 3, delay = 3000)
     @Override
     public Response_DTO_TipoPersona crear(Request_Save_DTO_TipoPersona dto) {
-
+        try {
             Entity_TipoPersona entity = mapper.crearEntity(dto);
             repository.persist(entity);
             return mapper.crearDTO(entity);
+        } catch (BadRequestException e) {
+            log.error(e.getMessage());
+            throw new BadRequestException(e.getMessage());
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            throw new NotFoundException(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new InternalServerErrorException("Error al crear tipo persona: " + e.getMessage());
+        }
 
     }
 }

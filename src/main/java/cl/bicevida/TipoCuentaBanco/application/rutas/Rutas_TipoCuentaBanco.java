@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static cl.bicevida.Utils.Constants.INTERNAL_SERVER_ERROR;
 import static cl.bicevida.Utils.Constants.REGISTRO_ELIMINADO;
 
 @Path("/api/tipo-cuentabanco")
@@ -82,14 +83,23 @@ public class Rutas_TipoCuentaBanco {
     @Retry(maxRetries = 3, delay = 3000, abortOn = {ValidationException.class})
     @Fallback(fallbackMethod = "fallbackCrear")
     public Response crear(Request_Save_DTO_TipoCuentaBanco dto) {
-        Set<ConstraintViolation<Request_Save_DTO_TipoCuentaBanco>> violations = validator.validate(dto);
-        if (!violations.isEmpty()) {
-            List<String> errors = new ArrayList<>();
-            violations.forEach(x -> errors.add(x.getMessage()));
-            return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationErrorResponse(errors)).build();
+        try {
+            Set<ConstraintViolation<Request_Save_DTO_TipoCuentaBanco>> violations = validator.validate(dto);
+            if (!violations.isEmpty()) {
+                List<String> errors = new ArrayList<>();
+                violations.forEach(x -> errors.add(x.getMessage()));
+                return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationErrorResponse(errors)).build();
+            }
+            Controller_Crear_TipoCuentaBanco controlador = new Controller_Crear_TipoCuentaBanco(crear_PuertoSalida);
+            return Response.status(Response.Status.OK).entity(controlador.crear(dto)).build();
+        } catch (BadRequestException | NotFoundException e) {
+            return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        } catch (InternalServerErrorException e) {
+            return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new GeneralErrorResponse(INTERNAL_SERVER_ERROR)).build();
         }
-        Controller_Crear_TipoCuentaBanco controlador = new Controller_Crear_TipoCuentaBanco(crear_PuertoSalida);
-        return Response.status(Response.Status.OK).entity(controlador.crear(dto)).build();
     }
 
     public Response fallbackCrear(Request_Save_DTO_TipoCuentaBanco dto) {
@@ -101,18 +111,23 @@ public class Rutas_TipoCuentaBanco {
     @Retry(maxRetries = 3, delay = 3000, abortOn = {NotFoundException.class})
     @Fallback(fallbackMethod = "fallbackActualizar")
     public Response actualizar(@PathParam("id") long id, Request_Update_DTO_TipoCuentaBanco dto) {
-        Set<ConstraintViolation<Request_Update_DTO_TipoCuentaBanco>> violations = validator.validate(dto);
-        if (!violations.isEmpty()) {
-            List<String> errors = new ArrayList<>();
-            violations.forEach(x -> errors.add(x.getMessage()));
-            return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationErrorResponse(errors)).build();
-        }
-
         try {
+            Set<ConstraintViolation<Request_Update_DTO_TipoCuentaBanco>> violations = validator.validate(dto);
+            if (!violations.isEmpty()) {
+                List<String> errors = new ArrayList<>();
+                violations.forEach(x -> errors.add(x.getMessage()));
+                return Response.status(Response.Status.BAD_REQUEST).entity(new ValidationErrorResponse(errors)).build();
+            }
+
             Controller_Actualizar_TipoCuentaBanco controlador = new Controller_Actualizar_TipoCuentaBanco(actualizar_PuertoSalida);
             return Response.status(Response.Status.OK).entity(controlador.actualizar(id, dto)).build();
-        } catch (NotFoundException e) {
+        } catch (BadRequestException | NotFoundException e) {
             return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        } catch (InternalServerErrorException e) {
+            return Response.status(e.getResponse().getStatus()).entity(new GeneralErrorResponse(e.getMessage())).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new GeneralErrorResponse(INTERNAL_SERVER_ERROR)).build();
         }
 
     }

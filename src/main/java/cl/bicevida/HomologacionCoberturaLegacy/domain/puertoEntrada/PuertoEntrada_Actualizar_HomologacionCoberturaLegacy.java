@@ -1,0 +1,8 @@
+package cl.bicevida.HomologacionCoberturaLegacy.domain.puertoEntrada;
+
+import cl.bicevida.HomologacionCoberturaLegacy.domain.DTO.Request_Update_DTO_HomologacionCoberturaLegacy;
+import cl.bicevida.HomologacionCoberturaLegacy.domain.DTO.Response_DTO_HomologacionCoberturaLegacy;
+
+public interface PuertoEntrada_Actualizar_HomologacionCoberturaLegacy {
+    public Response_DTO_HomologacionCoberturaLegacy actualizar(Long id, Request_Update_DTO_HomologacionCoberturaLegacy dtoIn);
+}

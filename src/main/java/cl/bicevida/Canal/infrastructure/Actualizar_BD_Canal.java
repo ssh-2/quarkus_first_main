@@ -8,6 +8,8 @@ import cl.bicevida.Canal.utils.Mapper_Canal;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.InternalServerErrorException;
 import jakarta.ws.rs.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.faulttolerance.Retry;
@@ -33,13 +35,25 @@ public class Actualizar_BD_Canal implements PuertoSalida_Actualizar_Canal {
     @Retry(maxRetries = 3, delay = 3000)
     @Transactional
     public Response_DTO_Canal actualizar(Long id, Request_Update_DTO_Canal dto) {
-        Entity_Canal entity = repository.findByIdOptional(id)
-                .orElseThrow(()-> new NotFoundException(NOT_FOUND_BY_ID+id));
-        entity.setNombre(dto.getNombre());
-        entity.setUsuarioActualizacion(dto.getUsuarioActualizacion());
-        entity.setFechaActualizacion(LocalDateTime.now());
-        repository.persist(entity);
+        try {
+            Entity_Canal entity = repository.findByIdOptional(id)
+                    .orElseThrow(() -> new NotFoundException(NOT_FOUND_BY_ID + id));
+            entity.setNombre(dto.getNombre());
+            entity.setUsuarioActualizacion(dto.getUsuarioActualizacion());
+            entity.setFechaActualizacion(LocalDateTime.now());
+            repository.persist(entity);
 
-        return mapper.crearDTO(entity);
+            return mapper.crearDTO(entity);
+        } catch (BadRequestException e) {
+            log.error(e.getMessage());
+            throw new BadRequestException(e.getMessage());
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            throw new NotFoundException(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new InternalServerErrorException("Error al actualizar un Canal: " + e.getMessage());
+        }
+
     }
 }
