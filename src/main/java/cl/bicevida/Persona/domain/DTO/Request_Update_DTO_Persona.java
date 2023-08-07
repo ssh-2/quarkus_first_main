@@ -18,6 +18,7 @@ import static cl.bicevida.Utils.Constants.*;
 @NoArgsConstructor
 public class Request_Update_DTO_Persona {
 
+
     @NotNull(message=rutJson + ES_REQUERIDO)
     @Size(min = rutMin,max = rutMax,message = rutSize)
     @Pattern(regexp  = REGEX_LETRAS_Y_NUMEROS_Y_GUION,message = rutJson + ERROR_SOLO_LETRAS_NUMEROS_GUION)
@@ -28,25 +29,23 @@ public class Request_Update_DTO_Persona {
     @NotNull(message=dvJson + ES_REQUERIDO)
     @Size(max = dvMax,message = dvSize)
     @Pattern(regexp  = REGEX_SOLO_NUMEROS_K,message = dvJson + ERROR_FORMATO_SOLO_NUMEROS_K)
-    @Schema(required = true, implementation = String.class, example = "K")
+    @Schema(required = true, implementation = String.class, example = "K, si es esRutChileno no debe enviarse el parametro")
     @JsonbProperty(dvJson)
     public String dv;
 
     @NotNull(message= nombresRazonSocialJson + ES_REQUERIDO)
     @Size(min = nombresRazonSocialMin,max = nombresRazonSocialMax,message = nombresRazonSocialSize)
-    @Pattern(regexp  = REGEX_SOLO_LETRAS_TRIM,message = nombresRazonSocialJson + ERROR_FORMATO_SOLO_LETRAS)
+    @Pattern(regexp  = REGEX_LETRAS_Y_NUMEROS_Y_GUION,message = nombresRazonSocialJson + ERROR_FORMATO_SOLO_LETRAS)
     @Schema(required = true, implementation = String.class, example = "Jhon")
     @JsonbProperty(nombresRazonSocialJson)
     public String nombresRazonSocial;
 
-    @NotNull(message= apellido1Json + ES_REQUERIDO)
     @Size(min = apellido1Min,max = apellido1Max,message = apellido1Size)
     @Pattern(regexp  = REGEX_SOLO_LETRAS_TRIM,message = apellido1Json + ERROR_FORMATO_SOLO_LETRAS)
     @Schema(required = true, implementation = String.class, example = "Doe")
     @JsonbProperty(apellido1Json)
     public String apellido1;
 
-    @NotNull(message= apellido2Json + ES_REQUERIDO)
     @Size(min = apellido2Min,max = apellido2Max,message = apellido2Size)
     @Pattern(regexp  = REGEX_SOLO_LETRAS_TRIM,message = apellido2Json + ERROR_FORMATO_SOLO_LETRAS)
     @Schema(required = true, implementation = String.class, example = "Polanzki")
@@ -60,16 +59,9 @@ public class Request_Update_DTO_Persona {
     @JsonbProperty(sexoJson)
     public String sexo;
 
-    @NotNull(message= tipo_personaJson + ES_REQUERIDO)
-    @Size(min = tipo_personaMin,max = tipo_personaMax,message = tipo_personaSize)
-    @Pattern(regexp  = REGEX_SOLO_NUMEROS,message = tipo_personaJson + ERROR_FORMATO_SOLO_NUMEROS)
-    @Schema(required = true, implementation = Long.class, example = "1")
-    @JsonbProperty(tipo_personaJson)
-    private String id_tipo_persona;
 
     @NotNull(message= usuarioActualizacionJson + ES_REQUERIDO)
     @Size(min = usuarioActualizacionJsonMin,max = usuarioActualizacionJsonMax,message = usuarioActualizacionJsonMsg)
-    @Pattern(regexp  = REGEX_SOLO_LETRAS_TRIM,message = usuarioActualizacionJson + ERROR_FORMATO_SOLO_LETRAS)
     @Schema(required = true, implementation = String.class, example = "Jhon")
     @JsonbProperty(usuarioActualizacionJson)
     private String usuarioActualizacion;
@@ -87,10 +79,16 @@ public class Request_Update_DTO_Persona {
     @JsonFormat(pattern = "yyyy-MM-dd")
     public String fechaNacimiento;
 
+    @NotNull(message= tipo_personaJson + ES_REQUERIDO)
+    @Pattern(regexp  = REGEX_SOLO_NUMEROS,message = tipo_personaJson + ERROR_FORMATO_SOLO_NUMEROS)
+    @Schema(required = true, implementation = String.class, example = "1")
+    @JsonbProperty(tipo_personaJson)
+    private String id_tipo_persona;
+
 
     @Pattern(regexp  = REGEX_SOLO_NUMEROS,message = tipo_personaJson + ERROR_FORMATO_SOLO_NUMEROS)
     @Size(min = idPersonaLegacyJsonMin,max = idPersonaLegacyJsonMax,message = idPersonaLegacyJsonSizeMsg)
-    @Schema(required = true, implementation = Long.class, example = "1")
+    @Schema(required = false, implementation = Long.class, example = "1")
     @JsonbProperty(idPersonaLegacyJson)
     private String idPersonaLegacy;
 
@@ -103,4 +101,5 @@ public class Request_Update_DTO_Persona {
     @Schema(required = false, implementation = Boolean.class, example = "true")
     @JsonbProperty(esRutChilenoJson)
     private Boolean esRutChileno;
+
 }

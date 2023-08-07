@@ -1,15 +1,16 @@
 package cl.bicevida.Parentesco.utils;
 
-import cl.bicevida.Persona.domain.DTO.Request_Save_DTO_Persona;
-import cl.bicevida.Persona.domain.DTO.Request_Update_DTO_Persona;
+import cl.bicevida.Parentesco.domain.DTO.Response_DTO_Parentesco;
+import cl.bicevida.Parentesco.domain.modelo.Entity_Parentesco;
 import cl.bicevida.Persona.domain.DTO.Response_DTO_Persona;
 import cl.bicevida.Persona.domain.modelo.Entity_Persona;
-import cl.bicevida.TipoPersona.domain.DTO.Response_DTO_TipoPersona;
-import cl.bicevida.TipoPersona.domain.modelo.Entity_TipoPersona;
+import cl.bicevida.Persona.utils.Mapper_Persona;
+import cl.bicevida.TipoParentesco.domain.DTO.Response_DTO_TipoParentesco;
+import cl.bicevida.TipoParentesco.domain.modelo.Entity_TipoParentesco;
+import cl.bicevida.TipoParentesco.utils.Mapper_TipoParentesco;
 import jakarta.enterprise.context.ApplicationScoped;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,172 +20,114 @@ import java.util.List;
 public class Mapper_Parentesco {
 
 
-    public Response_DTO_Persona crearDTO(Entity_Persona entity) {
-        Response_DTO_TipoPersona tipoPersona = new Response_DTO_TipoPersona();
-        tipoPersona.setNombre(entity.getTipo_persona().getNombre());
-        tipoPersona.setId(entity.getTipo_persona().getId());
+    private final Mapper_Persona mapperPersona;
+    private final Mapper_TipoParentesco mapperTipoParentesco;
 
-        Response_DTO_Persona dto = new Response_DTO_Persona();
+    public Mapper_Parentesco(Mapper_Persona mapperPersona, Mapper_TipoParentesco mapperTipoParentesco) {
+        this.mapperPersona = mapperPersona;
+        this.mapperTipoParentesco = mapperTipoParentesco;
+    }
+
+    public Response_DTO_Parentesco crearDTO(Entity_Parentesco entity) {
+
+        Response_DTO_Persona persona = mapperPersona.crearDTO(entity.getPariente());
+        Response_DTO_Persona pariente = mapperPersona.crearDTO(entity.getParienteRelacion());
+        Response_DTO_TipoParentesco tipoParentesco = mapperTipoParentesco.crearDTO(entity.getTipoParentesco());
+
+        Response_DTO_Parentesco dto = new Response_DTO_Parentesco();
         dto.setId(entity.getId());
-        dto.setRut(entity.getRut());
-        dto.setDv(entity.getDv());
-        dto.setNombresRazonSocial(entity.getNombresRazonSocial());
-        dto.setApellido1(entity.getApellido1());
-        dto.setApellido2(entity.getApellido2());
-        dto.setFechaNacimiento(entity.getFechaNacimiento());
-        dto.setSexo(entity.getSexo());
-        dto.setEmail(entity.getEmail());
-        dto.setTipo_persona(tipoPersona);
-        dto.setIdPersonaLegacy(entity.getIdPersonaLegacy());
-        dto.setDireccion(entity.getDireccion());
+        dto.setComentario(entity.getComentario());
+        dto.setParticipacion(entity.getParticipacion());
+        dto.setVigente(entity.getVigente());
+        dto.setPariente(persona);
+        dto.setPariente(pariente);
+        dto.setTipoParentesco(tipoParentesco);
+
         return dto;
     }
 
-    public List<Response_DTO_Persona> crearDTO(List<Entity_Persona> entities) {
-        List<Response_DTO_Persona> dtos = new ArrayList<>();
-        for (Entity_Persona entity : entities) {
+    public List<Response_DTO_Parentesco> crearDTO(List<Entity_Parentesco> entities) {
+        List<Response_DTO_Parentesco> dtos = new ArrayList<>();
+        for (Entity_Parentesco entity : entities) {
             dtos.add(crearDTO(entity));
         }
         return dtos;
     }
 
 
-    public Entity_Persona crearEntity(Request_Save_DTO_Persona dto, Entity_TipoPersona tipoPersona) {
-        Entity_Persona entity = new Entity_Persona();
-        Entity_Persona actualizado = generarEntity(entity,
-                dto.getRut(),
-                dto.getDv(),
-                dto.getNombresRazonSocial(),
-                dto.getApellido1(),
-                dto.getApellido2(),
-                dto.getFechaNacimiento(),
-                dto.getSexo(),
-                getEmail(dto),
-                tipoPersona,
-                dto.getIdPersonaLegacy(),
-                getDireccion(dto)
+    public Entity_Parentesco crearEntity(Entity_Persona persona,
+                                         Entity_Persona pariente,
+                                         Entity_TipoParentesco tipoParentesco,
+                                         Boolean vigente,
+                                         Double participacion,
+                                         String comentario,
+                                         String usuario
+    ) {
+        Entity_Parentesco entity = new Entity_Parentesco();
+
+        Entity_Parentesco actualizado = generarEntity(
+                entity,
+                persona,
+                pariente,
+                tipoParentesco,
+                vigente,
+                participacion,
+                comentario
+
         );
-        actualizado.setUsuarioCreacion(dto.getUsuarioCreacion());
+        actualizado.setUsuarioCreacion(usuario);
         actualizado.setFechaCreacion(LocalDateTime.now());
-        return entity;
+        return actualizado;
     }
 
-    public Entity_Persona crearEntityCamposMinimos(Request_Save_DTO_Persona dto, Entity_TipoPersona tipoPersona) {
-        Entity_Persona entity = new Entity_Persona();
-        Entity_Persona actualizado = generarEntity(entity,
-                dto.getRut(),
-                dto.getDv(),
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                tipoPersona,
-                dto.getIdPersonaLegacy(),
-                null
+
+    public Entity_Parentesco crearEntity(Entity_Parentesco entity,
+                                         Entity_Persona persona,
+                                         Entity_Persona pariente,
+                                         Entity_TipoParentesco tipoParentesco,
+                                         Boolean vigente,
+                                         Double participacion,
+                                         String comentario,
+                                         String usuario
+                                         ) {
+        Entity_Parentesco actualizado = generarEntity(
+                entity,
+                persona,
+                pariente,
+                tipoParentesco,
+                vigente,
+                participacion,
+                comentario
+
         );
-        actualizado.setUsuarioCreacion(dto.getUsuarioCreacion());
-        actualizado.setFechaCreacion(LocalDateTime.now());
-        return entity;
-    }
-
-    public Entity_Persona crearEntityCamposMinimos(Request_Update_DTO_Persona dto, Entity_TipoPersona tipoPersona,Entity_Persona entity) {
-        Entity_Persona actualizado = generarEntity(entity,
-                dto.getRut(),
-                dto.getDv(),
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                tipoPersona,
-                dto.getIdPersonaLegacy(),
-                null
-        );
-        actualizado.setUsuarioActualizacion(dto.getUsuarioActualizacion());
-        actualizado.setFechaActualizacion(LocalDateTime.now());
-        return entity;
-    }
-
-    public Entity_Persona crearEntity(Request_Update_DTO_Persona dto, Entity_TipoPersona tipoPersona, Entity_Persona entity) {
-        Entity_Persona actualizado = generarEntity(entity,
-                dto.getRut(),
-                dto.getDv(),
-                dto.getNombresRazonSocial(),
-                dto.getApellido1(),
-                dto.getApellido2(),
-                dto.getFechaNacimiento(),
-                dto.getSexo(),
-                getEmail(dto),
-                tipoPersona,
-                dto.getIdPersonaLegacy(),
-                getDireccion(dto)
-                );
-        actualizado.setUsuarioActualizacion(dto.getUsuarioActualizacion());
+        actualizado.setUsuarioActualizacion(usuario);
         actualizado.setFechaActualizacion(LocalDateTime.now());
         return actualizado;
     }
 
-    private Entity_Persona generarEntity(Entity_Persona entity,
-                                         String rut,
-                                         String dv,
-                                         String nombre,
-                                         String apellido1,
-                                         String apellido2,
-                                         String fechaNacimientoString,
-                                         String sexo,
-                                         String email,
-                                         Entity_TipoPersona tipoPersona,
-                                         String IdPersonaLegacy,
-                                         String direccion
-    ){
+    private Entity_Parentesco generarEntity(
+            Entity_Parentesco entity,
+            Entity_Persona persona,
+            Entity_Persona pariente,
+            Entity_TipoParentesco tipoParentesco,
+            Boolean vigente,
+            Double participacionIn,
+            String comentario
+    ) {
 
-        if(fechaNacimientoString != null){
-            LocalDate fechaNacimiento = LocalDate.parse(fechaNacimientoString);
-            entity.setFechaNacimiento(fechaNacimiento);
-        }else{
-            entity.setFechaNacimiento(null);
+        Double participacion = 0D;
+        if (participacionIn != null) {
+            participacion = participacionIn;
         }
-        entity.setRut(rut);
-        entity.setDv(dv);
-        entity.setNombresRazonSocial(nombre);
-        entity.setApellido1(apellido1);
-        entity.setApellido2(apellido2);
-        entity.setSexo(sexo);
-        entity.setEmail(email);
-        entity.setTipo_persona(tipoPersona);
-        entity.setIdPersonaLegacy(IdPersonaLegacy);
-        entity.setDireccion(direccion);
+
+        entity.setPariente(persona);
+        entity.setParienteRelacion(pariente);
+        entity.setTipoParentesco(tipoParentesco);
+        entity.setVigente(vigente);
+        entity.setParticipacion(participacion);
+        entity.setComentario(comentario);
+
         return entity;
     }
 
-    protected String getEmail(Request_Save_DTO_Persona dto){
-        if(dto.getEmail()==null){
-            return null;
-        }
-        return dto.getEmail();
-    }
-
-    protected String getEmail(Request_Update_DTO_Persona dto){
-        if(dto.getEmail() == null){
-            return null;
-        }
-        return dto.getEmail();
-    }
-
-    protected String getDireccion(Request_Save_DTO_Persona dto){
-        if(dto.getDireccion()==null){
-            return null;
-        }
-        return dto.getDireccion();
-    }
-
-    protected String getDireccion(Request_Update_DTO_Persona dto){
-        if(dto.getDireccion() == null){
-            return null;
-        }
-        return dto.getDireccion();
-    }
 }

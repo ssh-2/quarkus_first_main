@@ -2,7 +2,7 @@ package cl.bicevida.Parentesco.utils;
 
 import static cl.bicevida.Utils.Constants.*;
 
-public class Parentesco_Constants {
+public class Constants_Parentesco {
 
     //ID PERSONA
     public static final  String idParienteParentescoJson = "idPersona";
@@ -67,6 +67,18 @@ public class Parentesco_Constants {
     public static final int usuarioCreacionParentescoMax = 250;
     public static final String usuarioCreacionParentescoSize = usuarioCreacionParentescoJson + DEBE_POSEER_MINIMO + usuarioCreacionParentescoMin + DEBE_POSEER_MAXIMO + usuarioCreacionParentescoMax;
     public static final String usuarioCreacionParentescoJsonMSG_REQUIRED = usuarioCreacionParentescoJson + ES_REQUERIDO;
+
+
+    public static final String idPersona_Relacion_Json = "idPersona";
+    public static final int idPersona_Relacion_Min = 1;
+    public static final int idPersona_Relacion_Max = 250;
+    public static final String idPersona_Relacion_Size = idPersona_Relacion_Json + DEBE_POSEER_MINIMO + idPersona_Relacion_Min + DEBE_POSEER_MAXIMO + idPersona_Relacion_Max;
+
+
+    public static final String idPariente_Relacion_Json = "idPariente";
+    public static final int idPariente_Relacion_Min = 1;
+    public static final int idPariente_Relacion_Max = 250;
+    public static final String idPariente_Relacion_Size = idPariente_Relacion_Json + DEBE_POSEER_MINIMO + idPariente_Relacion_Min + DEBE_POSEER_MAXIMO + idPariente_Relacion_Max;
 
 
 }
